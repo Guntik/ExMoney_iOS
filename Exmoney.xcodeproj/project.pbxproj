@@ -1,0 +1,819 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1F042CAB1FBDC1EA00FBC10B /* AddTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F042CA91FBDC1EA00FBC10B /* AddTransactionViewController.swift */; };
+		1F1941C61F56C8010014AB5D /* ShowTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1941C51F56C8010014AB5D /* ShowTransactionViewController.swift */; };
+		1F1941C81F56DD960014AB5D /* AddNewTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1941C71F56DD960014AB5D /* AddNewTransactionViewController.swift */; };
+		1F1F8CB81E8A822300759EFF /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1F8CB71E8A822300759EFF /* EditViewController.swift */; };
+		1F451FDF1E68589800E144A7 /* AccountClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F451FDE1E68589700E144A7 /* AccountClass.swift */; };
+		1F5A85A51E73494D00597576 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 1F5A85A41E73494D00597576 /* Podfile */; };
+		1FCBDA051EDECE550014E6D2 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1FD5085B1E826C7100B8A9DC /* TableViewCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD508571E826C7100B8A9DC /* TableViewCell1.swift */; };
+		1FD5085C1E826C7100B8A9DC /* TableViewCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FD508581E826C7100B8A9DC /* TableViewCell1.xib */; };
+		1FD5085D1E826C7100B8A9DC /* TableViewCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD508591E826C7100B8A9DC /* TableViewCell2.swift */; };
+		1FD5085E1E826C7100B8A9DC /* TableViewCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FD5085A1E826C7100B8A9DC /* TableViewCell2.xib */; };
+		1FD508601E83BFD500B8A9DC /* PopUpListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD5085F1E83BFD500B8A9DC /* PopUpListViewController.swift */; };
+		1FD7571B1ECC519D00F96D01 /* TransactionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD7571A1ECC519D00F96D01 /* TransactionTest.swift */; };
+		1FD7571D1ECC5D9A00F96D01 /* AccountClassTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD7571C1ECC5D9A00F96D01 /* AccountClassTest.swift */; };
+		1FDDB1BF1ECC3A5A0039F1B5 /* ExmoneyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDDB1BE1ECC3A5A0039F1B5 /* ExmoneyTests.swift */; };
+		1FDDB1C71ECC3ADE0039F1B5 /* AccountsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDDB1C61ECC3ADE0039F1B5 /* AccountsTest.swift */; };
+		1FE18C4E1F29EADC00D5B0AA /* AccountAndTransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE18C4D1F29EADC00D5B0AA /* AccountAndTransactionsViewController.swift */; };
+		1FE938DA1E449AAD00D9F0BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE938D91E449AAD00D9F0BF /* AppDelegate.swift */; };
+		1FE938DC1E449AAD00D9F0BF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE938DB1E449AAD00D9F0BF /* ViewController.swift */; };
+		1FE938DF1E449AAD00D9F0BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FE938DD1E449AAD00D9F0BF /* Main.storyboard */; };
+		1FE938E11E449AAE00D9F0BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FE938E01E449AAE00D9F0BF /* Assets.xcassets */; };
+		1FE938E41E449AAE00D9F0BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FE938E21E449AAE00D9F0BF /* LaunchScreen.storyboard */; };
+		1FE938FA1E449AAE00D9F0BF /* ExmoneyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE938F91E449AAE00D9F0BF /* ExmoneyUITests.swift */; };
+		1FE939081E44A7E300D9F0BF /* URLLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE939071E44A7E300D9F0BF /* URLLoginViewController.swift */; };
+		1FEE76831ED2EFBF00BCA8F1 /* TransactionsResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE76821ED2EFBF00BCA8F1 /* TransactionsResponse.json */; };
+		24127AAE8E04CD2614258C76 /* Pods_ExmoneyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB2EB58C92F44AFB2E9B7CA /* Pods_ExmoneyTests.framework */; };
+		EB0151D8C36AC678DE2A9014 /* Pods_Exmoney.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C3B4C9EEABA25F51312D6F8 /* Pods_Exmoney.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1FDDB1C11ECC3A5A0039F1B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FE938CE1E449AAD00D9F0BF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1FE938D51E449AAD00D9F0BF;
+			remoteInfo = Exmoney;
+		};
+		1FE938F61E449AAE00D9F0BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FE938CE1E449AAD00D9F0BF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1FE938D51E449AAD00D9F0BF;
+			remoteInfo = Exmoney;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1FCBDA061EDECE550014E6D2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1FCBDA051EDECE550014E6D2 /* (null) in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1F042CA91FBDC1EA00FBC10B /* AddTransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
+		1F1941C51F56C8010014AB5D /* ShowTransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowTransactionViewController.swift; sourceTree = "<group>"; };
+		1F1941C71F56DD960014AB5D /* AddNewTransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewTransactionViewController.swift; sourceTree = "<group>"; };
+		1F1F8CB71E8A822300759EFF /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		1F451FDE1E68589700E144A7 /* AccountClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountClass.swift; sourceTree = "<group>"; };
+		1F5A85A41E73494D00597576 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		1FD508571E826C7100B8A9DC /* TableViewCell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell1.swift; sourceTree = "<group>"; };
+		1FD508581E826C7100B8A9DC /* TableViewCell1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewCell1.xib; sourceTree = "<group>"; };
+		1FD508591E826C7100B8A9DC /* TableViewCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell2.swift; sourceTree = "<group>"; };
+		1FD5085A1E826C7100B8A9DC /* TableViewCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewCell2.xib; sourceTree = "<group>"; };
+		1FD5085F1E83BFD500B8A9DC /* PopUpListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpListViewController.swift; sourceTree = "<group>"; };
+		1FD7571A1ECC519D00F96D01 /* TransactionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTest.swift; sourceTree = "<group>"; };
+		1FD7571C1ECC5D9A00F96D01 /* AccountClassTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountClassTest.swift; sourceTree = "<group>"; };
+		1FDDB1BC1ECC3A5A0039F1B5 /* ExmoneyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExmoneyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FDDB1BE1ECC3A5A0039F1B5 /* ExmoneyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExmoneyTests.swift; sourceTree = "<group>"; };
+		1FDDB1C01ECC3A5A0039F1B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FDDB1C61ECC3ADE0039F1B5 /* AccountsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsTest.swift; sourceTree = "<group>"; };
+		1FE18C4D1F29EADC00D5B0AA /* AccountAndTransactionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountAndTransactionsViewController.swift; sourceTree = "<group>"; };
+		1FE938D61E449AAD00D9F0BF /* Exmoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Exmoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FE938D91E449AAD00D9F0BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1FE938DB1E449AAD00D9F0BF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1FE938DE1E449AAD00D9F0BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1FE938E01E449AAE00D9F0BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1FE938E31E449AAE00D9F0BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1FE938E51E449AAE00D9F0BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FE938F51E449AAE00D9F0BF /* ExmoneyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExmoneyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FE938F91E449AAE00D9F0BF /* ExmoneyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExmoneyUITests.swift; sourceTree = "<group>"; };
+		1FE938FB1E449AAE00D9F0BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FE939071E44A7E300D9F0BF /* URLLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLLoginViewController.swift; sourceTree = "<group>"; };
+		1FEE76821ED2EFBF00BCA8F1 /* TransactionsResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = TransactionsResponse.json; path = ../Exmoney/TransactionsResponse.json; sourceTree = "<group>"; };
+		4A652632F908BF4AB1F4E680 /* Pods-ExmoneyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExmoneyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ExmoneyTests/Pods-ExmoneyTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4CB2EB58C92F44AFB2E9B7CA /* Pods_ExmoneyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExmoneyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55DD6759B405C0782476310C /* Pods-ExmoneyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExmoneyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExmoneyTests/Pods-ExmoneyTests.release.xcconfig"; sourceTree = "<group>"; };
+		7C3B4C9EEABA25F51312D6F8 /* Pods_Exmoney.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Exmoney.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3F8A9A284C7995F5E4E4612 /* Pods-Exmoney.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Exmoney.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Exmoney/Pods-Exmoney.debug.xcconfig"; sourceTree = "<group>"; };
+		D3AD1A1AD07CA2863B6EE337 /* Pods-Exmoney.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Exmoney.release.xcconfig"; path = "Pods/Target Support Files/Pods-Exmoney/Pods-Exmoney.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1FDDB1B91ECC3A5A0039F1B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24127AAE8E04CD2614258C76 /* Pods_ExmoneyTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FE938D31E449AAD00D9F0BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB0151D8C36AC678DE2A9014 /* Pods_Exmoney.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FE938F21E449AAE00D9F0BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		026845F08B1D39481DDBC770 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7C3B4C9EEABA25F51312D6F8 /* Pods_Exmoney.framework */,
+				4CB2EB58C92F44AFB2E9B7CA /* Pods_ExmoneyTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1FDDB1BD1ECC3A5A0039F1B5 /* ExmoneyTests */ = {
+			isa = PBXGroup;
+			children = (
+				1FEE76821ED2EFBF00BCA8F1 /* TransactionsResponse.json */,
+				1FDDB1BE1ECC3A5A0039F1B5 /* ExmoneyTests.swift */,
+				1FDDB1C01ECC3A5A0039F1B5 /* Info.plist */,
+				1FDDB1C61ECC3ADE0039F1B5 /* AccountsTest.swift */,
+				1FD7571A1ECC519D00F96D01 /* TransactionTest.swift */,
+				1FD7571C1ECC5D9A00F96D01 /* AccountClassTest.swift */,
+			);
+			path = ExmoneyTests;
+			sourceTree = "<group>";
+		};
+		1FE938CD1E449AAD00D9F0BF = {
+			isa = PBXGroup;
+			children = (
+				1F5A85A41E73494D00597576 /* Podfile */,
+				1FE938D81E449AAD00D9F0BF /* Exmoney */,
+				1FE938F81E449AAE00D9F0BF /* ExmoneyUITests */,
+				1FDDB1BD1ECC3A5A0039F1B5 /* ExmoneyTests */,
+				1FE938D71E449AAD00D9F0BF /* Products */,
+				9ED8499E103EDF59499BEF00 /* Pods */,
+				026845F08B1D39481DDBC770 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		1FE938D71E449AAD00D9F0BF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FE938D61E449AAD00D9F0BF /* Exmoney.app */,
+				1FE938F51E449AAE00D9F0BF /* ExmoneyUITests.xctest */,
+				1FDDB1BC1ECC3A5A0039F1B5 /* ExmoneyTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FE938D81E449AAD00D9F0BF /* Exmoney */ = {
+			isa = PBXGroup;
+			children = (
+				1F042CA91FBDC1EA00FBC10B /* AddTransactionViewController.swift */,
+				1FD508571E826C7100B8A9DC /* TableViewCell1.swift */,
+				1FD508591E826C7100B8A9DC /* TableViewCell2.swift */,
+				1FD508581E826C7100B8A9DC /* TableViewCell1.xib */,
+				1FD5085A1E826C7100B8A9DC /* TableViewCell2.xib */,
+				1FE938D91E449AAD00D9F0BF /* AppDelegate.swift */,
+				1FE938DD1E449AAD00D9F0BF /* Main.storyboard */,
+				1F1941C71F56DD960014AB5D /* AddNewTransactionViewController.swift */,
+				1F1941C51F56C8010014AB5D /* ShowTransactionViewController.swift */,
+				1FE938DB1E449AAD00D9F0BF /* ViewController.swift */,
+				1F1F8CB71E8A822300759EFF /* EditViewController.swift */,
+				1FE18C4D1F29EADC00D5B0AA /* AccountAndTransactionsViewController.swift */,
+				1FD5085F1E83BFD500B8A9DC /* PopUpListViewController.swift */,
+				1FE938E01E449AAE00D9F0BF /* Assets.xcassets */,
+				1FE938E21E449AAE00D9F0BF /* LaunchScreen.storyboard */,
+				1FE938E51E449AAE00D9F0BF /* Info.plist */,
+				1FE939071E44A7E300D9F0BF /* URLLoginViewController.swift */,
+				1F451FDE1E68589700E144A7 /* AccountClass.swift */,
+			);
+			path = Exmoney;
+			sourceTree = "<group>";
+		};
+		1FE938F81E449AAE00D9F0BF /* ExmoneyUITests */ = {
+			isa = PBXGroup;
+			children = (
+				1FE938F91E449AAE00D9F0BF /* ExmoneyUITests.swift */,
+				1FE938FB1E449AAE00D9F0BF /* Info.plist */,
+			);
+			path = ExmoneyUITests;
+			sourceTree = "<group>";
+		};
+		9ED8499E103EDF59499BEF00 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A3F8A9A284C7995F5E4E4612 /* Pods-Exmoney.debug.xcconfig */,
+				D3AD1A1AD07CA2863B6EE337 /* Pods-Exmoney.release.xcconfig */,
+				4A652632F908BF4AB1F4E680 /* Pods-ExmoneyTests.debug.xcconfig */,
+				55DD6759B405C0782476310C /* Pods-ExmoneyTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1FDDB1BB1ECC3A5A0039F1B5 /* ExmoneyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FDDB1C31ECC3A5A0039F1B5 /* Build configuration list for PBXNativeTarget "ExmoneyTests" */;
+			buildPhases = (
+				7F2CC14270CF252059E386FF /* [CP] Check Pods Manifest.lock */,
+				1FDDB1B81ECC3A5A0039F1B5 /* Sources */,
+				1FDDB1B91ECC3A5A0039F1B5 /* Frameworks */,
+				1FDDB1BA1ECC3A5A0039F1B5 /* Resources */,
+				1FCBD9F81EDEB52C0014E6D2 /* ShellScript */,
+				A66FE1582217461AB212DA68 /* [CP] Embed Pods Frameworks */,
+				5A01715FE23ACEE4AB20F872 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1FDDB1C21ECC3A5A0039F1B5 /* PBXTargetDependency */,
+			);
+			name = ExmoneyTests;
+			productName = ExmoneyTests;
+			productReference = 1FDDB1BC1ECC3A5A0039F1B5 /* ExmoneyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		1FE938D51E449AAD00D9F0BF /* Exmoney */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FE938FE1E449AAE00D9F0BF /* Build configuration list for PBXNativeTarget "Exmoney" */;
+			buildPhases = (
+				BCD9BDAAC04CA07FC17D46B1 /* [CP] Check Pods Manifest.lock */,
+				1FE938D21E449AAD00D9F0BF /* Sources */,
+				1FE938D31E449AAD00D9F0BF /* Frameworks */,
+				1FE938D41E449AAD00D9F0BF /* Resources */,
+				1FD4A1201E563CBC001D2058 /* ShellScript */,
+				1FCBDA061EDECE550014E6D2 /* Embed Frameworks */,
+				F798A8C22944DC1327125C1D /* [CP] Embed Pods Frameworks */,
+				CA39A032A3BEC4F5FCA61FBF /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Exmoney;
+			productName = Exmoney;
+			productReference = 1FE938D61E449AAD00D9F0BF /* Exmoney.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1FE938F41E449AAE00D9F0BF /* ExmoneyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FE939041E449AAE00D9F0BF /* Build configuration list for PBXNativeTarget "ExmoneyUITests" */;
+			buildPhases = (
+				1FE938F11E449AAE00D9F0BF /* Sources */,
+				1FE938F21E449AAE00D9F0BF /* Frameworks */,
+				1FE938F31E449AAE00D9F0BF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1FE938F71E449AAE00D9F0BF /* PBXTargetDependency */,
+			);
+			name = ExmoneyUITests;
+			productName = ExmoneyUITests;
+			productReference = 1FE938F51E449AAE00D9F0BF /* ExmoneyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1FE938CE1E449AAD00D9F0BF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Damir Gaynetdinov";
+				TargetAttributes = {
+					1FDDB1BB1ECC3A5A0039F1B5 = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 1FE938D51E449AAD00D9F0BF;
+					};
+					1FE938D51E449AAD00D9F0BF = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = JRS3VK3FWG;
+						ProvisioningStyle = Automatic;
+					};
+					1FE938F41E449AAE00D9F0BF = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 1FE938D51E449AAD00D9F0BF;
+					};
+				};
+			};
+			buildConfigurationList = 1FE938D11E449AAD00D9F0BF /* Build configuration list for PBXProject "Exmoney" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1FE938CD1E449AAD00D9F0BF;
+			productRefGroup = 1FE938D71E449AAD00D9F0BF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1FE938D51E449AAD00D9F0BF /* Exmoney */,
+				1FE938F41E449AAE00D9F0BF /* ExmoneyUITests */,
+				1FDDB1BB1ECC3A5A0039F1B5 /* ExmoneyTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1FDDB1BA1ECC3A5A0039F1B5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FE938D41E449AAD00D9F0BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FD5085C1E826C7100B8A9DC /* TableViewCell1.xib in Resources */,
+				1FEE76831ED2EFBF00BCA8F1 /* TransactionsResponse.json in Resources */,
+				1FE938E41E449AAE00D9F0BF /* LaunchScreen.storyboard in Resources */,
+				1FE938E11E449AAE00D9F0BF /* Assets.xcassets in Resources */,
+				1F5A85A51E73494D00597576 /* Podfile in Resources */,
+				1FD5085E1E826C7100B8A9DC /* TableViewCell2.xib in Resources */,
+				1FE938DF1E449AAD00D9F0BF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FE938F31E449AAE00D9F0BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1FCBD9F81EDEB52C0014E6D2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Define output file; change \"${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name\nBUILD_PATH=\"$SCRIPT_PATH/Generator/.build\"\nif [[ \"$1\" = \"--clean\" || ! -e \"$FILE_PATH\" || ! -d \"$BUILD_PATH\" ]]; then\n\nOUTPUT_FILE=\"./${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = ${OUTPUT_FILE}\"\n\n# Define input directory; change \"${PROJECT_NAME}\" to your project's root source folder, if it's not the default name\nINPUT_DIR=\"./${PROJECT_NAME}\"\necho \"Mocks Input Directory = ${INPUT_DIR}\"\n\n# Generate mock files; include as many input files as you'd like to create mocks for\n${PODS_ROOT}/Cuckoo/run generate --testable \"${PROJECT_NAME}\" \\\n--output \"${OUTPUT_FILE}\" \\\n\"${INPUT_DIR}/UrlSession.swift\"g once, locate `GeneratedMocks.swift` and drag it into your Xcode test target group.";
+		};
+		1FD4A1201E563CBC001D2058 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+		5A01715FE23ACEE4AB20F872 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ExmoneyTests/Pods-ExmoneyTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7F2CC14270CF252059E386FF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ExmoneyTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A66FE1582217461AB212DA68 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ExmoneyTests/Pods-ExmoneyTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DatePickerCell/DatePickerCell.framework",
+				"${BUILT_PRODUCTS_DIR}/Floaty/Floaty.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DatePickerCell.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Floaty.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ExmoneyTests/Pods-ExmoneyTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BCD9BDAAC04CA07FC17D46B1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Exmoney-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA39A032A3BEC4F5FCA61FBF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Exmoney/Pods-Exmoney-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F798A8C22944DC1327125C1D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Exmoney/Pods-Exmoney-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DatePickerCell/DatePickerCell.framework",
+				"${BUILT_PRODUCTS_DIR}/Floaty/Floaty.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DatePickerCell.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Floaty.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Exmoney/Pods-Exmoney-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1FDDB1B81ECC3A5A0039F1B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FD7571D1ECC5D9A00F96D01 /* AccountClassTest.swift in Sources */,
+				1FD7571B1ECC519D00F96D01 /* TransactionTest.swift in Sources */,
+				1FDDB1BF1ECC3A5A0039F1B5 /* ExmoneyTests.swift in Sources */,
+				1FDDB1C71ECC3ADE0039F1B5 /* AccountsTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FE938D21E449AAD00D9F0BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FD5085B1E826C7100B8A9DC /* TableViewCell1.swift in Sources */,
+				1FE18C4E1F29EADC00D5B0AA /* AccountAndTransactionsViewController.swift in Sources */,
+				1FE939081E44A7E300D9F0BF /* URLLoginViewController.swift in Sources */,
+				1F042CAB1FBDC1EA00FBC10B /* AddTransactionViewController.swift in Sources */,
+				1FE938DC1E449AAD00D9F0BF /* ViewController.swift in Sources */,
+				1F1941C61F56C8010014AB5D /* ShowTransactionViewController.swift in Sources */,
+				1FD508601E83BFD500B8A9DC /* PopUpListViewController.swift in Sources */,
+				1F1941C81F56DD960014AB5D /* AddNewTransactionViewController.swift in Sources */,
+				1FD5085D1E826C7100B8A9DC /* TableViewCell2.swift in Sources */,
+				1F451FDF1E68589800E144A7 /* AccountClass.swift in Sources */,
+				1F1F8CB81E8A822300759EFF /* EditViewController.swift in Sources */,
+				1FE938DA1E449AAD00D9F0BF /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FE938F11E449AAE00D9F0BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FE938FA1E449AAE00D9F0BF /* ExmoneyUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1FDDB1C21ECC3A5A0039F1B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1FE938D51E449AAD00D9F0BF /* Exmoney */;
+			targetProxy = 1FDDB1C11ECC3A5A0039F1B5 /* PBXContainerItemProxy */;
+		};
+		1FE938F71E449AAE00D9F0BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1FE938D51E449AAD00D9F0BF /* Exmoney */;
+			targetProxy = 1FE938F61E449AAE00D9F0BF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1FE938DD1E449AAD00D9F0BF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1FE938DE1E449AAD00D9F0BF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1FE938E21E449AAE00D9F0BF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1FE938E31E449AAE00D9F0BF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1FDDB1C41ECC3A5A0039F1B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4A652632F908BF4AB1F4E680 /* Pods-ExmoneyTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				INFOPLIST_FILE = ExmoneyTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Galina.ExmoneyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Exmoney.app/Exmoney";
+			};
+			name = Debug;
+		};
+		1FDDB1C51ECC3A5A0039F1B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55DD6759B405C0782476310C /* Pods-ExmoneyTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				INFOPLIST_FILE = ExmoneyTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Galina.ExmoneyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Exmoney.app/Exmoney";
+			};
+			name = Release;
+		};
+		1FE938FC1E449AAE00D9F0BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1FE938FD1E449AAE00D9F0BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1FE938FF1E449AAE00D9F0BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3F8A9A284C7995F5E4E4612 /* Pods-Exmoney.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = JRS3VK3FWG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = Exmoney/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.galina.ex-money";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		1FE939001E449AAE00D9F0BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3AD1A1AD07CA2863B6EE337 /* Pods-Exmoney.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = JRS3VK3FWG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = Exmoney/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.galina.ex-money";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		1FE939051E449AAE00D9F0BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = ExmoneyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Galina.ExmoneyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Exmoney;
+			};
+			name = Debug;
+		};
+		1FE939061E449AAE00D9F0BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = ExmoneyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Galina.ExmoneyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Exmoney;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1FDDB1C31ECC3A5A0039F1B5 /* Build configuration list for PBXNativeTarget "ExmoneyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FDDB1C41ECC3A5A0039F1B5 /* Debug */,
+				1FDDB1C51ECC3A5A0039F1B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FE938D11E449AAD00D9F0BF /* Build configuration list for PBXProject "Exmoney" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FE938FC1E449AAE00D9F0BF /* Debug */,
+				1FE938FD1E449AAE00D9F0BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FE938FE1E449AAE00D9F0BF /* Build configuration list for PBXNativeTarget "Exmoney" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FE938FF1E449AAE00D9F0BF /* Debug */,
+				1FE939001E449AAE00D9F0BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FE939041E449AAE00D9F0BF /* Build configuration list for PBXNativeTarget "ExmoneyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FE939051E449AAE00D9F0BF /* Debug */,
+				1FE939061E449AAE00D9F0BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1FE938CE1E449AAD00D9F0BF /* Project object */;
+}

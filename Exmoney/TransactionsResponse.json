@@ -1,0 +1,108 @@
+(
+{
+        "account_id" = 9;
+        amount = "-9";
+        "amount_millicents" = "-9000";
+        category =         {
+            id = 25;
+            name = groceries;
+        };
+        "currency_code" = "<null>";
+        description = "<null>";
+        id = 2507;
+        "made_on" = "2017-05-20";
+        "transaction_info" = "<null>";
+    },
+        {
+        "account_id" = 9;
+        amount = "-4";
+        "amount_millicents" = "-4000";
+        category =         {
+            id = 54;
+            name = "cafes_and_restaurants";
+        };
+        "currency_code" = "<null>";
+        description = "<null>";
+        id = 2506;
+        "made_on" = "2017-05-20";
+        "transaction_info" = "<null>";
+    },
+        {
+        "account_id" = 9;
+        amount = "-50";
+        "amount_millicents" = "-50000";
+        category =         {
+            id = 44;
+            name = education;
+        };
+        "currency_code" = "<null>";
+        description = "<null>";
+        id = 2505;
+        "made_on" = "2017-05-19";
+        "transaction_info" = "<null>";
+    },
+        {
+        "account_id" = 9;
+        amount = "-5";
+        "amount_millicents" = "-5000";
+        category =         {
+            id = 25;
+            name = groceries;
+        };
+        "currency_code" = "<null>";
+        description = "<null>";
+        id = 2504;
+        "made_on" = "2017-05-19";
+        "transaction_info" = "<null>";
+    },
+        {
+        "account_id" = 4;
+        amount = "-22.69";
+        "amount_millicents" = "-22690";
+        category =         {
+            id = 25;
+            name = groceries;
+        };
+        "currency_code" = EUR;
+        description = "170516551666411181256004754 REWE SAGT DANKE. 42400083";
+        id = 2503;
+        "made_on" = "2017-05-19";
+        "transaction_info" =         {
+            additional = "<null>";
+            information = DE67500101111932685101;
+            payee = "REWE Berlin/Prenzl";
+        };
+    },
+        {
+        "account_id" = 4;
+        amount = "10.75";
+        "amount_millicents" = 10750;
+        category =         {
+            id = 63;
+            name = bonus;
+        };
+        "currency_code" = EUR;
+        description = "NR7319387022GUTSCHRIFTSBELEG29.04";
+        id = 2502;
+        "made_on" = "2017-05-18";
+        "transaction_info" =         {
+            additional = "<null>";
+            information = "<null>";
+            payee = "VISA WWW ZALANDO DE";
+        };
+    },
+        {
+        "account_id" = 9;
+        amount = "-8";
+        "amount_millicents" = "-8000";
+        category =         {
+            id = 54;
+            name = "cafes_and_restaurants";
+        };
+        "currency_code" = "<null>";
+        description = "<null>";
+        id = 2501;
+        "made_on" = "2017-05-18";
+        "transaction_info" = "<null>";
+    }
+)

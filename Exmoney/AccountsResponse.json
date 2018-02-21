@@ -1,0 +1,55 @@
+({
+balance = "2011.86";
+"balance_millicents" = 2011860;
+"currency_code" = EUR;
+id = 5;
+name = 5551290544;
+"saltedge_account_id" = 144624;
+"show_on_dashboard" = "<null>";
+},
+{
+balance = "10661.08";
+"balance_millicents" = 10661080;
+"currency_code" = EUR;
+id = 4;
+name = IngDiba;
+"saltedge_account_id" = 144625;
+"show_on_dashboard" = 1;
+},
+{
+balance = "223.19";
+"balance_millicents" = 223190;
+"currency_code" = EUR;
+id = 9;
+name = Cash;
+"saltedge_account_id" = "<null>";
+"show_on_dashboard" = 1;
+},
+{
+balance = "8.92";
+"balance_millicents" = 8920;
+"currency_code" = RUB;
+id = 14;
+name = 40817810108190008461;
+"saltedge_account_id" = 173003;
+"show_on_dashboard" = "<null>";
+},
+{
+balance = "9949.76";
+"balance_millicents" = 9949760;
+"currency_code" = RUB;
+id = 15;
+name = Alfa;
+"saltedge_account_id" = 173002;
+"show_on_dashboard" = 1;
+},
+{
+balance = "0.0";
+"balance_millicents" = 0;
+"currency_code" = RUB;
+id = 13;
+name = 40817810405770913459;
+"saltedge_account_id" = 173004;
+"show_on_dashboard" = "<null>";
+}
+)

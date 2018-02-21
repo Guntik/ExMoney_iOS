@@ -1,0 +1,35 @@
+PODS:
+  - DatePickerCell (1.0.7)
+  - Floaty (4.0.0)
+  - ReachabilitySwift (4.1.0)
+  - Realm (3.0.2):
+    - Realm/Headers (= 3.0.2)
+  - Realm/Headers (3.0.2)
+  - RealmSwift (3.0.2):
+    - Realm (= 3.0.2)
+
+DEPENDENCIES:
+  - DatePickerCell
+  - Floaty (from `https://github.com/kciter/Floaty`)
+  - ReachabilitySwift
+  - RealmSwift
+
+EXTERNAL SOURCES:
+  Floaty:
+    :git: https://github.com/kciter/Floaty
+
+CHECKOUT OPTIONS:
+  Floaty:
+    :commit: b53ebe703f35d58ba94efbb4b509afe73601dd61
+    :git: https://github.com/kciter/Floaty
+
+SPEC CHECKSUMS:
+  DatePickerCell: f324217007d784b085647631c2067edadce58f55
+  Floaty: df27b72d9ed1e58d48aa3717327ffdb857268c63
+  ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
+  Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
+  RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
+
+PODFILE CHECKSUM: a6c12bff2543f0e5bdfde0e8387d54e11e3c3a92
+
+COCOAPODS: 1.3.1
