@@ -95,12 +95,21 @@ class AccountAndTransactionsViewController: UIViewController, UITableViewDataSou
         includTableViewInHeader(view: header, tableView: tableViewAccounts)
         
         //register customCell
-        tableViewTransactions.register(TransactionCell.self, forCellReuseIdentifier: "CellID")
+        //tableViewTransactions.register(TransactionCell.self, forCellReuseIdentifier: "CellID")
+        
         
         //Pull-to-refresh
         refreshControl.tintColor = UIColor.red
         refreshControl.addTarget(self, action: #selector(AccountAndTransactionsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
         self.tableViewTransactions.addSubview(self.refreshControl)
+        
+        setWidthOfTables()
+    }
+    
+    //to set width of AccountTable and TransactionTable as width of view
+    func setWidthOfTables(){
+        tableViewAccounts.frame.size.width = view.frame.size.width
+        tableViewTransactions.frame.size.width = view.frame.size.width
     }
     
     func heightOfTableView() -> Int{
@@ -529,28 +538,34 @@ class AccountAndTransactionsViewController: UIViewController, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == self.tableViewTransactions {
-            let cell = TransactionCell(style: UITableViewCellStyle.default, reuseIdentifier: "CellID")
+            let cell = Bundle.main.loadNibNamed("TransactionTableViewCell", owner: self, options: nil)?.first as! TransactionTableViewCell
+            //let cell = TransactionCell(style: UITableViewCellStyle.default, reuseIdentifier: "CellID")
             if let code1 = AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].CurrencyCode {
-                cell.Amount.text = amountToString(amount_millic: AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].Amount_millicents) + " " + getSymbolForCurrencyCode(code: AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].CurrencyCode!)!}
+                cell.AmountLbl.text = amountToString(amount_millic: AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].Amount_millicents) + " " + getSymbolForCurrencyCode(code: AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].CurrencyCode!)!}
+                //cell.Amount.text = amountToString(amount_millic: AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].Amount_millicents) + " " + getSymbolForCurrencyCode(code: AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].CurrencyCode!)!}
             else {
-                cell.Amount.text = amountToString(amount_millic: AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].Amount_millicents)
+                cell.AmountLbl.text = amountToString(amount_millic: AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].Amount_millicents)
+                //cell.Amount.text = amountToString(amount_millic: AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].Amount_millicents)*/
             }
             
-            
-            cell.Category.text = AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].Category?.name
+            cell.CategoryLbl.text = AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].Category?.name
+            //cell.Category.text = AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].Category?.name
             
             if (AllTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].Payee != nil){
-                cell.Description?.text = self.AllTransaction.filter("MadeOn == %@", self.sectionNames[indexPath.section])[indexPath.row].Payee!}
-            else {cell.Description?.text = "Cash"}
+                cell.DescriptionLbl.text = self.AllTransaction.filter("MadeOn == %@", self.sectionNames[indexPath.section])[indexPath.row].Payee!}
+                //cell.Description?.text = self.AllTransaction.filter("MadeOn == %@", self.sectionNames[indexPath.section])[indexPath.row].Payee!}
+            else {
+                cell.DescriptionLbl.text = "Cash"
+                //cell.Description?.text = "Cash"
+            }
             
             return cell
         }
         else{
-            //let cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: "AccountCellID")
-            let cell = AccountCell(style: UITableViewCellStyle.default, reuseIdentifier: "AccountCellID")
+            let cell = Bundle.main.loadNibNamed("AccountTableViewCell", owner: self, options: nil)?.first as! AccountTableViewCell
             let acc = AllAccounts[indexPath.row]
-            cell.Account.text = acc.Name
-            cell.Balance.text = amountToString(amount_millic: Int(acc.Balance_millicents)) + " " + getSymbolForCurrencyCode(code: acc.CurrencyCode)!
+            cell.AccountLbl.text = acc.Name
+            cell.BalanceLbl.text = amountToString(amount_millic: Int(acc.Balance_millicents)) + " " + getSymbolForCurrencyCode(code: acc.CurrencyCode)!
 
             return cell
         }

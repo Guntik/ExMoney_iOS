@@ -21,6 +21,9 @@ class ShowTransactionViewController: UIViewController, UITableViewDelegate, UITa
         showNavigationItem.title = "Transaction"
         showNavigationItem.leftBarButtonItem = UIBarButtonItem(title: "← Back", style: .plain, target: self, action: #selector(backAction))
         tableView.tableFooterView = UIView(frame: CGRect.zero)
+        
+        //tableView.rowHeight = UITableViewAutomaticDimension
+        //tableView.estimatedRowHeight = 100
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,16 +44,22 @@ class ShowTransactionViewController: UIViewController, UITableViewDelegate, UITa
             return 4
         }
         else{
-            return 2
+            return 1//2
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 3 && indexPath.section == 0 {
-            return 85
+            return 80
         }
         else {
-            return 40
+            if (indexPath.section == 1)
+            {
+                return 80
+            }
+            else {
+                return 40
+            }
         }
     }
     
@@ -84,18 +93,20 @@ class ShowTransactionViewController: UIViewController, UITableViewDelegate, UITa
             }
         }
         else {
-        switch indexPath.row {
-        case 0:
+        //switch indexPath.row {
+        //case 0:
             if (showTransaction.Payee == nil){
                 cell.detailTextLabel?.text = ""}
             else {cell.detailTextLabel?.text = showTransaction.Payee}
             cell.textLabel?.text = "Payee"
-        default:
+            cell.detailTextLabel?.numberOfLines = 0
+       /* default:
             if (showTransaction.Information == nil){
                 cell.detailTextLabel?.text = ""}
             else {cell.detailTextLabel?.text = showTransaction.Information}
             cell.textLabel?.text = "Information"
-        }
+            cell.detailTextLabel?.numberOfLines = 0
+        }*/
         }
         return cell
     }

@@ -13,7 +13,13 @@
 		1F1F8CB81E8A822300759EFF /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1F8CB71E8A822300759EFF /* EditViewController.swift */; };
 		1F451FDF1E68589800E144A7 /* AccountClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F451FDE1E68589700E144A7 /* AccountClass.swift */; };
 		1F5A85A51E73494D00597576 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 1F5A85A41E73494D00597576 /* Podfile */; };
+		1F8ABEE5204D7F6100D2CD19 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8ABEE3204D7F6100D2CD19 /* TransactionTableViewCell.swift */; };
+		1F8ABEE6204D7F6100D2CD19 /* TransactionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8ABEE4204D7F6100D2CD19 /* TransactionTableViewCell.xib */; };
+		1F8ABEE9204D84C400D2CD19 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8ABEE7204D84C400D2CD19 /* TextFieldTableViewCell.swift */; };
+		1F8ABEEA204D84C400D2CD19 /* TextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8ABEE8204D84C400D2CD19 /* TextFieldTableViewCell.xib */; };
 		1FCBDA051EDECE550014E6D2 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1FCFE702204D5F0500C0C924 /* AccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFE700204D5F0500C0C924 /* AccountTableViewCell.swift */; };
+		1FCFE703204D5F0500C0C924 /* AccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFE701204D5F0500C0C924 /* AccountTableViewCell.xib */; };
 		1FD5085B1E826C7100B8A9DC /* TableViewCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD508571E826C7100B8A9DC /* TableViewCell1.swift */; };
 		1FD5085C1E826C7100B8A9DC /* TableViewCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FD508581E826C7100B8A9DC /* TableViewCell1.xib */; };
 		1FD5085D1E826C7100B8A9DC /* TableViewCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD508591E826C7100B8A9DC /* TableViewCell2.swift */; };
@@ -74,6 +80,12 @@
 		1F1F8CB71E8A822300759EFF /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		1F451FDE1E68589700E144A7 /* AccountClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountClass.swift; sourceTree = "<group>"; };
 		1F5A85A41E73494D00597576 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		1F8ABEE3204D7F6100D2CD19 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
+		1F8ABEE4204D7F6100D2CD19 /* TransactionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionTableViewCell.xib; sourceTree = "<group>"; };
+		1F8ABEE7204D84C400D2CD19 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		1F8ABEE8204D84C400D2CD19 /* TextFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldTableViewCell.xib; sourceTree = "<group>"; };
+		1FCFE700204D5F0500C0C924 /* AccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewCell.swift; sourceTree = "<group>"; };
+		1FCFE701204D5F0500C0C924 /* AccountTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountTableViewCell.xib; sourceTree = "<group>"; };
 		1FD508571E826C7100B8A9DC /* TableViewCell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell1.swift; sourceTree = "<group>"; };
 		1FD508581E826C7100B8A9DC /* TableViewCell1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewCell1.xib; sourceTree = "<group>"; };
 		1FD508591E826C7100B8A9DC /* TableViewCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell2.swift; sourceTree = "<group>"; };
@@ -142,6 +154,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		1F8ABEE2204D7F2F00D2CD19 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				1FCFE700204D5F0500C0C924 /* AccountTableViewCell.swift */,
+				1FCFE701204D5F0500C0C924 /* AccountTableViewCell.xib */,
+				1F8ABEE3204D7F6100D2CD19 /* TransactionTableViewCell.swift */,
+				1F8ABEE4204D7F6100D2CD19 /* TransactionTableViewCell.xib */,
+				1F8ABEE7204D84C400D2CD19 /* TextFieldTableViewCell.swift */,
+				1F8ABEE8204D84C400D2CD19 /* TextFieldTableViewCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		1FDDB1BD1ECC3A5A0039F1B5 /* ExmoneyTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +206,7 @@
 		1FE938D81E449AAD00D9F0BF /* Exmoney */ = {
 			isa = PBXGroup;
 			children = (
+				1F8ABEE2204D7F2F00D2CD19 /* Cells */,
 				1F042CA91FBDC1EA00FBC10B /* AddTransactionViewController.swift */,
 				1FD508571E826C7100B8A9DC /* TableViewCell1.swift */,
 				1FD508591E826C7100B8A9DC /* TableViewCell2.swift */,
@@ -348,10 +374,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FD5085C1E826C7100B8A9DC /* TableViewCell1.xib in Resources */,
+				1FCFE703204D5F0500C0C924 /* AccountTableViewCell.xib in Resources */,
 				1FEE76831ED2EFBF00BCA8F1 /* TransactionsResponse.json in Resources */,
 				1FE938E41E449AAE00D9F0BF /* LaunchScreen.storyboard in Resources */,
+				1F8ABEE6204D7F6100D2CD19 /* TransactionTableViewCell.xib in Resources */,
 				1FE938E11E449AAE00D9F0BF /* Assets.xcassets in Resources */,
 				1F5A85A51E73494D00597576 /* Podfile in Resources */,
+				1F8ABEEA204D84C400D2CD19 /* TextFieldTableViewCell.xib in Resources */,
 				1FD5085E1E826C7100B8A9DC /* TableViewCell2.xib in Resources */,
 				1FE938DF1E449AAD00D9F0BF /* Main.storyboard in Resources */,
 			);
@@ -529,6 +558,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FCFE702204D5F0500C0C924 /* AccountTableViewCell.swift in Sources */,
 				1FD5085B1E826C7100B8A9DC /* TableViewCell1.swift in Sources */,
 				1FE18C4E1F29EADC00D5B0AA /* AccountAndTransactionsViewController.swift in Sources */,
 				1FE939081E44A7E300D9F0BF /* URLLoginViewController.swift in Sources */,
@@ -536,6 +566,8 @@
 				1FE938DC1E449AAD00D9F0BF /* ViewController.swift in Sources */,
 				1F1941C61F56C8010014AB5D /* ShowTransactionViewController.swift in Sources */,
 				1FD508601E83BFD500B8A9DC /* PopUpListViewController.swift in Sources */,
+				1F8ABEE5204D7F6100D2CD19 /* TransactionTableViewCell.swift in Sources */,
+				1F8ABEE9204D84C400D2CD19 /* TextFieldTableViewCell.swift in Sources */,
 				1F1941C81F56DD960014AB5D /* AddNewTransactionViewController.swift in Sources */,
 				1FD5085D1E826C7100B8A9DC /* TableViewCell2.swift in Sources */,
 				1F451FDF1E68589800E144A7 /* AccountClass.swift in Sources */,

@@ -81,7 +81,7 @@ class AddNewTransactionViewController: UIViewController, UITableViewDataSource, 
         navigationBarItem.title = "New Transaction"
         navigationBarItem.leftBarButtonItem = UIBarButtonItem(title: "← Back", style: .plain, target: self, action: #selector(backAction))
         
-        tableView.register(TextFiledTableViewCell.self, forCellReuseIdentifier: "textCell")
+        //tableView.register(TextFiledTableViewCell.self, forCellReuseIdentifier: "textCell")
         tableView.register(DatePickerTableViewCell.self, forCellReuseIdentifier: "datePickerCell")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         //tableView.estimatedRowHeight = 300
@@ -132,15 +132,16 @@ class AddNewTransactionViewController: UIViewController, UITableViewDataSource, 
     
     func addButtonPressed(_ sender: UIButton){
         
-        let cell:TextFiledTableViewCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! TextFiledTableViewCell
-        if cell.RightTextField.text != "0" {
+        let cell = Bundle.main.loadNibNamed("TextFieldTableViewCell", owner: self, options: nil)?.first as! TextFieldTableViewCell
+        //let cell:TextFiledTableViewCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! TextFiledTableViewCell
+        if cell.TextFieldCell.text != "0" {
             
-            newTransaction.Amount_millicents = -1 * stringToAmountMillicent(stringAmount: cell.RightTextField.text)
+            newTransaction.Amount_millicents = -1 * stringToAmountMillicent(stringAmount: cell.TextFieldCell.text!)
             
             if (flagIncome){
                 newTransaction.Amount_millicents = newTransaction.Amount_millicents * -1
             }
-            newTransaction.Description = (tableView.cellForRow(at: IndexPath(row: 4, section: 0)) as! TextFiledTableViewCell).RightTextField.text
+            newTransaction.Description = (tableView.cellForRow(at: IndexPath(row: 4, section: 0)) as! TextFieldTableViewCell).TextFieldCell.text
             newTransaction.MadeOn = dateFormatterRow.date(from: ((tableView.cellForRow(at: IndexPath(row: 3, section: 0)) as! UITableViewCell).detailTextLabel?.text!)!)
             
             delegateTransaction?.addingDelegate(addTransaction: newTransaction)
@@ -188,11 +189,11 @@ class AddNewTransactionViewController: UIViewController, UITableViewDataSource, 
         }
             else {
                 if (indexPath.row == 0){
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "textCell", for: indexPath) as! TextFiledTableViewCell
-                    cell.LeftTextLabel.text = "Amount"
-                    cell.RightTextField.text = "0"
-                    cell.RightTextField.textColor = UIColor.gray
-                    cell.RightTextField.keyboardType = UIKeyboardType.decimalPad
+                    let cell = Bundle.main.loadNibNamed("TextFieldTableViewCell", owner: self, options: nil)?.first as! TextFieldTableViewCell
+                    cell.NameLbl.text = "Amount"
+                    cell.TextFieldCell.text = "0"
+                    cell.TextFieldCell.textColor = UIColor.gray
+                    cell.TextFieldCell.keyboardType = UIKeyboardType.decimalPad
                     return cell
                 }
                 else {
@@ -204,11 +205,11 @@ class AddNewTransactionViewController: UIViewController, UITableViewDataSource, 
                         return cell
                     }
                     else {
-                        let cell = tableView.dequeueReusableCell(withIdentifier: "textCell", for: indexPath) as! TextFiledTableViewCell
-                        cell.LeftTextLabel.text = "Note"
-                        cell.RightTextField.text = "Note"
-                        cell.RightTextField.textColor = UIColor.gray
-                        cell.RightTextField.delegate = self
+                        let cell = Bundle.main.loadNibNamed("TextFieldTableViewCell", owner: self, options: nil)?.first as! TextFieldTableViewCell
+                        cell.NameLbl.text = "Note"
+                        cell.TextFieldCell.text = "Note"
+                        cell.TextFieldCell.textColor = UIColor.gray
+                        //cell.TextFieldCell.delegate = self as! UITextFieldDelegate ????
                         return cell
                         }
                     }

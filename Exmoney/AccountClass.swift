@@ -187,76 +187,6 @@ struct CellData{
     var text2:Any!
 }
 
-class TransactionCell: UITableViewCell{
-    
-    var Category: UILabel!
-    var Amount: UILabel!
-    var Description: UILabel!
-    
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:)")
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        let gapX : CGFloat = 20
-        let gapY1 :CGFloat = 6
-        let gapY2 :CGFloat = 40
-        let labelHeight: CGFloat = 20
-        let labelWidth: CGFloat = 170
-        let labelWidth1: CGFloat = 300
-        
-        Category = UILabel()
-        Category.frame = CGRect(x: gapX, y: gapY1, width: labelWidth, height: labelHeight)
-        contentView.addSubview(Category)
-        
-        Amount = UILabel()
-        Amount.textAlignment = NSTextAlignment.right
-        Amount.frame = CGRect(x: frame.width - labelWidth - gapX, y: gapY1, width: labelWidth, height: labelHeight)
-        contentView.addSubview(Amount)
-        
-        Description = UILabel()
-        Description.frame = CGRect(x: gapX, y: gapY2, width: labelWidth1, height: labelHeight)
-        contentView.addSubview(Description)
-        
-        Category.font = UIFont(name: "HelveticaNeue", size: 15.0)
-        Amount.font = UIFont(name: "HelveticaNeue", size: 14.0)
-        Description.font = UIFont.boldSystemFont(ofSize: 14.0)
-    }
-}
-
-class AccountCell: UITableViewCell{
-    
-    var Account: UILabel!
-    var Balance: UILabel!
-    
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:)")
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        let gapX : CGFloat = 20
-        let gapY :CGFloat = 9
-        let labelHeight: CGFloat = 20
-        let labelWidth: CGFloat = 120
-        
-        Account = UILabel()
-        Account.frame = CGRect(x: gapX, y: gapY, width: labelWidth, height: labelHeight)
-        contentView.addSubview(Account)
-        
-        Balance = UILabel()
-        Balance.textAlignment = NSTextAlignment.right
-        Balance.frame = CGRect(x: frame.width - labelWidth - gapX, y: gapY, width: labelWidth, height: labelHeight)
-        contentView.addSubview(Balance)
-        
-        Account.font = UIFont(name: "Helvetica Neue", size: 15.0)
-        Balance.font = UIFont(name: "Helvetica Neue", size: 15.0)
-        
-    }
-}
 
 class MainCategoryHeaderTableViewCell: UITableViewCell {
     
@@ -292,40 +222,6 @@ class CategoryTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
     }
-}
-
-class TextFiledTableViewCell:UITableViewCell{
-    
-    var RightTextField: UITextView!
-    var LeftTextLabel: UILabel!
-    
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:)")
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        let gapX : CGFloat = 16
-        let gapY :CGFloat = 7
-        let labelHeight: CGFloat = 40
-        let labelWidth: CGFloat = 220
-        
-        LeftTextLabel = UILabel()
-        LeftTextLabel.frame = CGRect(x: gapX, y: 0, width: 120, height: frame.height)
-        contentView.addSubview(LeftTextLabel)
-        
-        RightTextField = UITextView()
-        RightTextField.textAlignment = NSTextAlignment.right
-        RightTextField.frame = CGRect(x: frame.width - labelWidth - gapX, y: gapY, width: labelWidth, height: frame.height)
-        contentView.addSubview(RightTextField)
-        
-        
-        LeftTextLabel.font = UIFont(name:"Helvetica Neue", size: 15.0)
-        RightTextField.font = UIFont(name: "Helvetica Neue", size: 15.0)
-        RightTextField.textColor = UIColor.black
-    }
-
 }
     
     class DatePickerTableViewCell:UITableViewCell{

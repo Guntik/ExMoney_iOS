@@ -50,7 +50,7 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func updateButtonAction(_ sender: Any) {
         let indexPath = IndexPath(row: 1, section: 0)
-        editNote = (tableView.cellForRow(at: indexPath) as? TextFiledTableViewCell)?.RightTextField.text
+        editNote = (tableView.cellForRow(at: indexPath) as? TextFieldTableViewCell)?.TextFieldCell.text
         delegate?.writeValueBack(sendBackCategory: categoryToUpdate , sendBackNote: editNote!)//nil
         dismiss(animated: true, completion: nil)
         
@@ -65,7 +65,7 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         labelText.text = labelInformation
         labelText.textColor = UIColor(red: 255/155, green: 198/255, blue: 67/255, alpha: 1)
         
-        tableView.register(TextFiledTableViewCell.self, forCellReuseIdentifier: "textCell")
+        //tableView.register(TextFieldTableViewCell.self, forCellReuseIdentifier: "textCell")
         
         //tableView.estimatedRowHeight = 70
         //tableView.rowHeight = UITableViewAutomaticDimension
@@ -89,16 +89,17 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.row == 1) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "textCell", for: indexPath) as! TextFiledTableViewCell
-            cell.LeftTextLabel.text = "Note"
-            cell.RightTextField.text = noteToUpdate
-            cell.RightTextField.font = UIFont(name: "Helvetica Neue", size: 14.0)
-            cell.RightTextField.textColor = UIColor.gray
+            let cell = Bundle.main.loadNibNamed("TextFieldTableViewCell", owner: self, options: nil)?.first as! TextFieldTableViewCell
+            //let cell = tableView.dequeueReusableCell(withIdentifier: "textCell", for: indexPath) as! TextFiledTableViewCell
+            cell.NameLbl.text = "Note"
+            cell.TextFieldCell.text = noteToUpdate
+            cell.TextFieldCell.font = UIFont(name: "Helvetica Neue", size: 14.0)
+            cell.TextFieldCell.textColor = UIColor.gray
             
             //cell.detailTextLabel?.numberOfLines = 0
             if (noteToUpdate == "")
             {
-                cell.RightTextField.text = "Note"
+                cell.TextFieldCell.text = "Note"
             }
             return cell
         } else {
