@@ -160,7 +160,7 @@ class AddNewTransactionViewController: UIViewController, UITableViewDataSource, 
     func sendDataBackToHomePageViewController(categoryToRefresh: CategoryTransaction) { //Custom delegate function which was defined inside child class to get the data and do the other stuffs.
         if categoryToRefresh != nil {
             newTransaction.Category = categoryToRefresh
-            valueNames[1] = categoryToRefresh.name!
+            valueNames[1] = categoryToRefresh.name
             let indexPath = IndexPath(row: 2, section:0)
             tableView.beginUpdates()
             tableView.reloadRows(at: [indexPath], with: .top)

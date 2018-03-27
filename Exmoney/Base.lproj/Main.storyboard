@@ -609,6 +609,11 @@
                                     <navigationItem title="ExMoney" id="8T2-AP-T2i"/>
                                 </items>
                             </navigationBar>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="khl-KV-xUQ">
+                                <rect key="frame" x="257" y="31" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="1" green="0.74553991900000005" blue="0.0086397835220000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -622,6 +627,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="processIndicator" destination="khl-KV-xUQ" id="4vk-WH-rUf"/>
                         <outlet property="tableViewTransactions" destination="Sgc-O3-Mwo" id="Isg-OG-4Zy"/>
                         <segue destination="CQZ-JQ-gBk" kind="push" identifier="passwordSeque1" id="wQS-e6-UiL"/>
                         <segue destination="Cbc-8v-pR0" kind="showDetail" id="UWj-Zs-tKq"/>

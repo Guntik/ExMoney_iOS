@@ -105,7 +105,7 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! UITableViewCell
             cell.textLabel?.text = "Category"
-            cell.detailTextLabel?.text = categoryToUpdate.name! + " >"
+            cell.detailTextLabel?.text = categoryToUpdate.name + " >"
             cell.detailTextLabel?.textColor = UIColor.gray
             cell.textLabel?.font = UIFont(name:"Helvetica Neue", size: 15.0)
             return cell

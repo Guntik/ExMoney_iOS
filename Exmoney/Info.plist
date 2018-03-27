@@ -29,7 +29,7 @@
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>https://ex-money.herokuapp.com</key>
-			<dict/>
+			<true/>
 			<key>NSTemporaryExceptionAllowsInsecuryHTTPLoads</key>
 			<true/>
 			<key>NSIncludesSubdomains</key>

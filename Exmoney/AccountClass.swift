@@ -74,7 +74,6 @@ class Transaction: Object{
         self.init()
         
         dateFormatt.dateFormat = "yyyy-MM-dd"
-        
         Amount_millicents = (jsonArray["amount_millicents"] as? Int)!
         account_id = (jsonArray["account_id"] as? Int)!
         MadeOn = dateFormatt.date(from: (jsonArray["made_on"] as? String)!)
@@ -113,7 +112,7 @@ class Transaction: Object{
 
 class CategoryTransaction:Object{
     dynamic var id:Int = 0
-    dynamic var name:String?
+    dynamic var name:String = ""
     dynamic var parent_id: Int = 0
     dynamic var parent:Bool = false
     
@@ -126,7 +125,7 @@ class CategoryTransaction:Object{
         self.init()
         
         id = (jsonArray["id"] as? Int)!
-        name = jsonArray["human_name"] as? String
+        name = (jsonArray["human_name"] as? String)!
         if let par = jsonArray["parent_id"] as? Int
         {
             parent_id = par
@@ -139,19 +138,79 @@ class CategoryTransaction:Object{
     }
 }
 
-
+class UpdatingTransaction: Object{
+    
+    dynamic var id:Int = 1
+    dynamic var uuid: String?
+    dynamic var actionClass: myActionClass?
+    dynamic var entity:String?
+    dynamic var insertedAtDate:Date?
+    dynamic var payload:Transaction? = nil
+    dynamic var checkFlag:Bool = false
+    
+    override static func primaryKey() -> String? {
+        return "uuid"
+    }
+    let dateFormatt = DateFormatter()
+    let dateFormatt_aqur = DateFormatter()
+    
+    convenience required init(jsonArray: [String : AnyObject] ) {
+        self.init()
+        
+        dateFormatt.dateFormat = "yyyy-MM-dd"
+        uuid = (jsonArray["uuid"] as? String)
+        entity = (jsonArray["entity"] as! String)
+        
+        actionClass = myActionClass()
+        actionClass?.action = (jsonArray["action"] as! String)
+        
+        let payloadTransaction = jsonArray["payload"] as! [String:Any]
+        
+        insertedAtDate = dateFormatt_aqur.date(from: (payloadTransaction["inserted_at"] as? String)!)
+        
+        
+        payload = Transaction()
+        payload?.MadeOn = dateFormatt.date(from: (payloadTransaction["made_on"] as? String)!)
+        payload?.account_id = (payloadTransaction["account_id"] as? Int)!
+        payload?.Amount_millicents = (payloadTransaction["amount_millicents"] as? Int)!
+        payload?.id = (payloadTransaction["id"] as? Int)!
+        
+        payload?.Category = CategoryTransaction()
+        payload?.Category?.id = (payloadTransaction["category_id"] as? Int)!
+        //payload?.Category?.name = (category["name"] as? String)!
+        
+        if let descr = payloadTransaction["description"] as? String {
+            payload?.Description = descr
+        } else {
+            payload?.Description = ""
+        }
+        
+        if let cur = payloadTransaction["currency_code"] as? String {
+            payload?.CurrencyCode = cur
+        } else {
+            payload?.CurrencyCode = ""
+        }
+        
+        if let description = payloadTransaction["extra"] as? [String:Any] {
+            let description1 = description["payee"] as? String
+            payload?.Payee = description1
+            payload?.Information = description["information"] as? String
+        }
+        else{
+            payload?.Payee = ""
+            payload?.Information = ""
+        }
+    }
+}
 
 class SectionList:Object{
    let Sections = List<Section>()
 }
 
 class Section:Object {
-    
     let heading : String = ""
     let ListTransaction = List<Transaction>()
-    
 }
-
 
 class TransactionsList:Object{
     let ListTransaction = List<Transaction>()
@@ -161,7 +220,11 @@ class CategoryTransactionList:Object{
     let ListCategoryTransactions = List<CategoryTransaction>()
 }
 
-class LogInfo:Object{
+class UpdatingTransactionList:Object{
+    let ListUpdatingResults = List<UpdatingTransaction>()
+}
+
+/*class LogInfo:Object{
     
     dynamic var id = 0
     dynamic var Transaction = ""
@@ -174,12 +237,25 @@ class LogInfo:Object{
 
 class LogInfoList:Object {
     let ListLogInfo = List<LogInfo>()
-}
+}*/
 
 enum Action:String{
     case Delete
     case Update
-    case Add
+    case Create
+}
+
+class myActionClass: Object {
+    dynamic var id = 0
+    dynamic var action = Action.Create.rawValue
+    var actionEnum: Action {
+        get {
+            return Action(rawValue: action)!
+        }
+        set {
+            action = newValue.rawValue
+        }
+    }
 }
 
 struct CellData{

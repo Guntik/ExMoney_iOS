@@ -52,7 +52,7 @@ class PopUpListViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         //sectionNames = getParentCategoryTransaction()
         
-        mainCategory = (getParentCategoryTransaction())!.sorted { $0.name! < $1.name! } //realm.objects(CategoryTransaction)
+        mainCategory = (getParentCategoryTransaction())!.sorted { $0.name < $1.name } //realm.objects(CategoryTransaction)
         self.view.backgroundColor = UIColor.white.withAlphaComponent(0.8)
         //tableView.tableFooterView = UIView.init(frame: CGRect.zero)
         //popUpNavigationItem.title = "New Transaction"
@@ -135,7 +135,7 @@ class PopUpListViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         self.categorySearchResults = self.mainCategory!.filter({( aSpecies: CategoryTransaction) -> Bool in
             // to start, let's just search by name
-            return aSpecies.name!.lowercased().range(of: searchText.lowercased()) != nil
+            return aSpecies.name.lowercased().range(of: searchText.lowercased()) != nil
         })
     }
     
@@ -215,7 +215,7 @@ class PopUpListViewController: UIViewController, UITableViewDelegate, UITableVie
 
             //arrayOfSpecies = self.mainCategory
             let categoryIsNeeded = realm.objects(CategoryTransaction.self).filter("name == %@ AND parent == true", sectionNames[indexPath.section]).first
-            arrayOfSpecies = realm.objects(CategoryTransaction.self).filter("parent_id == %@", categoryIsNeeded?.id).toArray(ofType: CategoryTransaction.self).sorted { $0.name! < $1.name! } as [CategoryTransaction]//self.getChildrenCategory(id: parent_id) //self.mainCategory=
+            arrayOfSpecies = realm.objects(CategoryTransaction.self).filter("parent_id == %@", categoryIsNeeded?.id).toArray(ofType: CategoryTransaction.self).sorted { $0.name < $1.name } as [CategoryTransaction]//self.getChildrenCategory(id: parent_id) //self.mainCategory=
         }
         
         if arrayOfSpecies != nil && arrayOfSpecies!.count >= indexPath.row
@@ -252,13 +252,13 @@ class PopUpListViewController: UIViewController, UITableViewDelegate, UITableVie
         
         if tableView == self.searchDisplayController!.searchResultsTableView {
             CategoryChange =  self.categorySearchResults![indexPath!.row]
-            category = CategoryChange.name!
+            category = CategoryChange.name
         }
         else {
             let categoryIsNeeded = realm.objects(CategoryTransaction.self).filter("name == %@ AND parent == true", sectionNames[(indexPath?.section)!]).first
-            arrayOfSpecies = realm.objects(CategoryTransaction.self).filter("parent_id == %@", categoryIsNeeded?.id).toArray(ofType: CategoryTransaction.self).sorted { $0.name! < $1.name! } as [CategoryTransaction]
+            arrayOfSpecies = realm.objects(CategoryTransaction.self).filter("parent_id == %@", categoryIsNeeded?.id).toArray(ofType: CategoryTransaction.self).sorted { $0.name < $1.name } as [CategoryTransaction]
             CategoryChange = arrayOfSpecies?[indexPath!.row]
-            category = CategoryChange.name!
+            category = CategoryChange.name
         }
         
         customDelegateForDataReturn?.sendDataBackToHomePageViewController(categoryToRefresh: CategoryChange)
