@@ -12,12 +12,12 @@ import RealmSwift
 
 class Account:Object {
     
-    dynamic var Balance_millicents:Int = 0
-    dynamic var CurrencyCode: String = ""
-    dynamic var Name: String = ""
-    dynamic var ShowOnDashboard:Bool = false
-    dynamic var SaltedgeAccountId:Bool = false
-    dynamic var id_acc:Int = 0
+    dynamic var balance_millicents: Int = 0
+    dynamic var currencyCode: String = ""
+    dynamic var name: String = ""
+    dynamic var isAccountShow: Bool = false
+    dynamic var isSaltedgeAccountIdShow: Bool = false
+    dynamic var id_acc: Int = 0
     
     override static func primaryKey() -> String? {
         return "id_acc"
@@ -27,41 +27,41 @@ class Account:Object {
         
         self.init()
         
-        Name = (jsonArray["name"] as? String)!
-        Balance_millicents = (jsonArray["balance_millicents"] as? Int)!
-        CurrencyCode = (jsonArray["currency_code"] as? String)!
+        name = (jsonArray["name"] as? String)!
+        balance_millicents = (jsonArray["balance_millicents"] as? Int)!
+        currencyCode = (jsonArray["currency_code"] as? String)!
         id_acc = (jsonArray["id"] as? Int)!
         
-        if let showOnDashboard = jsonArray["show_on_dashboard"] as? Bool {
-             ShowOnDashboard = true
+        if let showOnDashboardValue = jsonArray["show_on_dashboard"] as? Bool {
+             isAccountShow = true
         } else {
-            ShowOnDashboard = false
+            isAccountShow = false 
         }
         
        if let saltage = jsonArray["saltedge_account_id"] as? Int {
-            SaltedgeAccountId = true
+            isSaltedgeAccountIdShow = true
         } else {
-            SaltedgeAccountId = false
+            isSaltedgeAccountIdShow = false
         }
     }
 }
 
 class AccountsList:Object {
-    let ListAccount = List<Account>()
+    let listAccount = List<Account>()
 }
 
 
 class Transaction: Object{
 
-    dynamic var MadeOn:Date?
-    dynamic var Description:String?
-    dynamic var Amount_millicents:Int = 0
-    dynamic var CurrencyCode:String?
-    dynamic var Category: CategoryTransaction? = nil
-    dynamic var Information: String?
-    dynamic var id:Int = 0
-    dynamic var Payee:String?
-    dynamic var account_id:Int = 0
+    dynamic var madeOn: Date?
+    dynamic var descriptionOfTransaction: String?
+    dynamic var amount_millicents: Int = 0
+    dynamic var currencyCode: String?
+    dynamic var category: CategoryTransaction? = nil
+    dynamic var information: String?
+    dynamic var id: Int = 0
+    dynamic var payee: String?
+    dynamic var account_id: Int = 0
     
     override static func primaryKey() -> String? {
         return "id"
@@ -74,64 +74,58 @@ class Transaction: Object{
         self.init()
         
         dateFormatt.dateFormat = "yyyy-MM-dd"
-        Amount_millicents = (jsonArray["amount_millicents"] as? Int)!
+        amount_millicents = (jsonArray["amount_millicents"] as? Int)!
         account_id = (jsonArray["account_id"] as? Int)!
-        MadeOn = dateFormatt.date(from: (jsonArray["made_on"] as? String)!)
+        madeOn = dateFormatt.date(from: (jsonArray["made_on"] as? String)!)
         id = (jsonArray["id"] as? Int)!
         
-        let category = jsonArray["category"] as! [String:Any]
-        Category = CategoryTransaction()
-        Category?.id = (category["id"] as? Int)!
-        Category?.name = (category["name"] as? String)!
+        let categoryValue = jsonArray["category"] as! [String:Any]
+        category = CategoryTransaction()
+        category?.id = (categoryValue["id"] as? Int)!
+        category?.name = (categoryValue["name"] as? String)!
         
         if let descr = jsonArray["description"] as? String {
-            Description = descr
+            descriptionOfTransaction = descr
         } else {
-            Description = ""
+            descriptionOfTransaction = ""
         }
         
         if let cur = jsonArray["currency_code"] as? String {
-            CurrencyCode = cur
+            currencyCode = cur
         } else {
-            CurrencyCode = ""
+            currencyCode = ""
         }
         
         if let description = jsonArray["extra"] as? [String:Any] {
             let description1 = description["payee"] as? String
-            Payee = description1
-            Information = description["information"] as? String
+            payee = description1
+            information = description["information"] as? String
+        } else {
+            payee = ""
+            information = ""
         }
-        else{
-            Payee = ""
-            Information = ""
-        }
-
     }
-    
 }
 
 class CategoryTransaction:Object{
-    dynamic var id:Int = 0
-    dynamic var name:String = ""
+    dynamic var id: Int = 0
+    dynamic var name: String = ""
     dynamic var parent_id: Int = 0
-    dynamic var parent:Bool = false
+    dynamic var parent: Bool = false
     
     override static func primaryKey() -> String? {
         return "id"
     }
     
     convenience required init(jsonArray: [String : AnyObject] ) {
-        
         self.init()
-        
         id = (jsonArray["id"] as? Int)!
         name = (jsonArray["human_name"] as? String)!
         if let par = jsonArray["parent_id"] as? Int
         {
             parent_id = par
             parent = false
-        }
-        else{
+        } else {
             parent = true
             parent_id = id
         }
@@ -140,13 +134,13 @@ class CategoryTransaction:Object{
 
 class UpdatingTransaction: Object{
     
-    dynamic var id:Int = 1
+    dynamic var id: Int = 1
     dynamic var uuid: String?
     dynamic var actionClass: myActionClass?
-    dynamic var entity:String?
-    dynamic var insertedAtDate:Date?
-    dynamic var payload:Transaction? = nil
-    dynamic var checkFlag:Bool = false
+    dynamic var entity: String?
+    dynamic var insertedAtDate: Date?
+    dynamic var payload: Transaction? = nil
+    dynamic var checkFlag: Bool = false
     
     override static func primaryKey() -> String? {
         return "uuid"
@@ -170,58 +164,56 @@ class UpdatingTransaction: Object{
         
         
         payload = Transaction()
-        payload?.MadeOn = dateFormatt.date(from: (payloadTransaction["made_on"] as? String)!)
+        payload?.madeOn = dateFormatt.date(from: (payloadTransaction["made_on"] as? String)!)
         payload?.account_id = (payloadTransaction["account_id"] as? Int)!
-        payload?.Amount_millicents = (payloadTransaction["amount_millicents"] as? Int)!
+        payload?.amount_millicents = (payloadTransaction["amount_millicents"] as? Int)!
         payload?.id = (payloadTransaction["id"] as? Int)!
         
-        payload?.Category = CategoryTransaction()
-        payload?.Category?.id = (payloadTransaction["category_id"] as? Int)!
-        //payload?.Category?.name = (category["name"] as? String)!
+        payload?.category = CategoryTransaction()
+        payload?.category?.id = (payloadTransaction["category_id"] as? Int)!
         
         if let descr = payloadTransaction["description"] as? String {
-            payload?.Description = descr
+            payload?.descriptionOfTransaction = descr
         } else {
-            payload?.Description = ""
+            payload?.descriptionOfTransaction = ""
         }
         
         if let cur = payloadTransaction["currency_code"] as? String {
-            payload?.CurrencyCode = cur
+            payload?.currencyCode = cur
         } else {
-            payload?.CurrencyCode = ""
+            payload?.currencyCode = ""
         }
         
         if let description = payloadTransaction["extra"] as? [String:Any] {
             let description1 = description["payee"] as? String
-            payload?.Payee = description1
-            payload?.Information = description["information"] as? String
-        }
-        else{
-            payload?.Payee = ""
-            payload?.Information = ""
+            payload?.payee = description1
+            payload?.information = description["information"] as? String
+        } else {
+            payload?.payee = ""
+            payload?.information = ""
         }
     }
 }
 
-class SectionList:Object{
-   let Sections = List<Section>()
+class SectionList: Object{
+   let sections = List<Section>()
 }
 
-class Section:Object {
+class Section: Object {
     let heading : String = ""
-    let ListTransaction = List<Transaction>()
+    let listTransaction = List<Transaction>()
 }
 
-class TransactionsList:Object{
-    let ListTransaction = List<Transaction>()
+class TransactionsList: Object {
+    let listTransaction = List<Transaction>()
 }
 
-class CategoryTransactionList:Object{
-    let ListCategoryTransactions = List<CategoryTransaction>()
+class CategoryTransactionList: Object {
+    let listCategoryTransactions = List<CategoryTransaction>()
 }
 
-class UpdatingTransactionList:Object{
-    let ListUpdatingResults = List<UpdatingTransaction>()
+class UpdatingTransactionList: Object {
+    let listUpdatingResults = List<UpdatingTransaction>()
 }
 
 /*class LogInfo:Object{
@@ -239,15 +231,15 @@ class LogInfoList:Object {
     let ListLogInfo = List<LogInfo>()
 }*/
 
-enum Action:String{
-    case Delete
-    case Update
-    case Create
+enum Action: String {
+    case delete
+    case update
+    case create
 }
 
 class myActionClass: Object {
     dynamic var id = 0
-    dynamic var action = Action.Create.rawValue
+    dynamic var action = Action.create.rawValue
     var actionEnum: Action {
         get {
             return Action(rawValue: action)!
@@ -258,17 +250,16 @@ class myActionClass: Object {
     }
 }
 
-struct CellData{
+struct CellData {
     let text1:String!
     var text2:Any!
 }
 
 
-class MainCategoryHeaderTableViewCell: UITableViewCell {
+/*class MainCategoryHeaderTableViewCell: UITableViewCell {
     
     @IBOutlet weak var categoryLabel: UILabel!
-    @IBOutlet weak var expandCollapseImageView: UIImageView!
-    @IBOutlet weak var headerCellButton: UIButton!
+    @IBOutlet weak var expandCollapseImageView: UIImageViewdescriptiontlet weak var headerCellButton: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -280,7 +271,7 @@ class MainCategoryHeaderTableViewCell: UITableViewCell {
         
     }    
 }
-
+*/
 
 class CategoryTableViewCell: UITableViewCell {
     
@@ -300,9 +291,9 @@ class CategoryTableViewCell: UITableViewCell {
     }
 }
     
-    class DatePickerTableViewCell:UITableViewCell{
+    class DatePickerTableViewCell: UITableViewCell {
         
-        var DatePicker: UIDatePicker!
+        var datePicker: UIDatePicker!
         
         required init(coder aDecoder: NSCoder) {
             fatalError("init(coder:)")
@@ -314,10 +305,10 @@ class CategoryTableViewCell: UITableViewCell {
             let gapX : CGFloat = 0
             let gapY :CGFloat = 0
             let labelHeight: CGFloat = 200
-            DatePicker = UIDatePicker()
-            DatePicker.datePickerMode = UIDatePickerMode.date
-            DatePicker.frame = CGRect(x: gapX, y: gapY, width: frame.width, height: labelHeight)
-            contentView.addSubview(DatePicker)
+            datePicker = UIDatePicker()
+            datePicker.datePickerMode = UIDatePickerMode.date
+            datePicker.frame = CGRect(x: gapX, y: gapY, width: frame.width, height: labelHeight)
+            contentView.addSubview(datePicker)
         }
         
     }

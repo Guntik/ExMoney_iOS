@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 import RealmSwift
 
 
@@ -18,18 +17,16 @@ class MyJsonClass{
     var categoryList = CategoryTransactionList()
     var updatingTransactions = UpdatingTransactionList()
     
-    var AllAccounts : Results<Account>!
-    var AllTransaction : Results<Transaction>!
-    var AllCategory : Results<CategoryTransaction>!
+    var allAccounts : Results<Account>!
+    var allTransaction : Results<Transaction>!
+    var allCategory : Results<CategoryTransaction>!
     
     func setRequest(urlAddition: String) -> URLRequest {
         //get Token and url
         let token = userDefaults.string(forKey: "TokenKey")
         let url = userDefaults.string(forKey: "URLKey")
-        
         //Methog Get with header Token
         let urlGet = url! + urlAddition
-        
         let myUrl=URL(string:urlGet)
         var request = URLRequest(url:myUrl!)
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -51,26 +48,23 @@ class MyJsonClass{
             data, response, error in
             guard(error == nil) else {
                 self.showMessage(messageString: "Error: " + error.debugDescription)
-                let VC = AccountAndTransactionsViewController()
-                VC.performSegue(withIdentifier: "passwordSeque1", sender: self)
+                let vc = AccountAndTransactionsViewController()
+                vc.performSegue(withIdentifier: "passwordSeque1", sender: self)
                 return
             }
             let parseResult: NSArray
             do{
-                
                 parseResult = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray
                 for index in 0...parseResult.count-1{
                     let account = Account(jsonArray: parseResult[index] as! [String : AnyObject])
-                    self.accountList.ListAccount.append(account)
+                    self.accountList.listAccount.append(account)
                 }
             } catch {
-                
                 self.showMessage(messageString: "Could not parse data as Json")
                 return
             }
             semaphore.signal()
             }.resume()
-        
         semaphore.wait(timeout: .distantFuture)
     }
     
@@ -82,27 +76,25 @@ class MyJsonClass{
             data, response, error in
             guard(error == nil) else {
                 self.showMessage(messageString: "Error: " + error.debugDescription)
-                let VC = AccountAndTransactionsViewController() //????
-                VC.performSegue(withIdentifier: "passwordSeque", sender: self)
+                let vc = AccountAndTransactionsViewController() //????
+                vc.performSegue(withIdentifier: "passwordSeque", sender: self)
                 return
             }
-            
             let parseResult: NSArray
-            do{
+            do {
                 parseResult = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray
                 //parsing json and make an array of transactions
                 for index in 0...parseResult.count-1{
                     let transaction = Transaction(jsonArray: parseResult[index] as! [String : AnyObject])
-                    self.transactions.ListTransaction.append(transaction)
+                    self.transactions.listTransaction.append(transaction)
                 }
-                
+               // print(transactions)
             } catch {
                 self.showMessage(messageString: "Could not parse data as Json")
                 return
             }
             semaphore.signal()
             }.resume()
-        
         semaphore.wait(timeout: .distantFuture)
     }
     
@@ -113,18 +105,17 @@ class MyJsonClass{
         URLSession.shared.dataTask(with: request){
             data, response, error in
             guard(error == nil) else {
-                
                 self.showMessage(messageString: "Error: " + error.debugDescription)
                 return
             }
             let categoryResult: NSArray
-            do{
+            do {
                 categoryResult = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray
                 //parsing json and make an array of categories
                 for index in 0...categoryResult.count-1{
                     
                     let category = CategoryTransaction(jsonArray: categoryResult[index] as! [String : AnyObject])
-                    self.categoryList.ListCategoryTransactions.append(category)
+                    self.categoryList.listCategoryTransactions.append(category)
                 }
             } catch {
                 self.showMessage(messageString: "Could not parse data as Json")
@@ -132,7 +123,6 @@ class MyJsonClass{
             }
             semaphore.signal()
             }.resume()
-        
         semaphore.wait(timeout: .distantFuture)
     }
     
@@ -154,7 +144,6 @@ class MyJsonClass{
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: jsonDict, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
-            
         } catch let error {
             print(error.localizedDescription)
         }
@@ -186,7 +175,7 @@ class MyJsonClass{
             if error != nil{
                 return
             }
-            do {
+        do {
                 let result = try JSONSerialization.jsonObject(with: data!, options: []) as? [String:AnyObject]
                 
             } catch {
@@ -231,20 +220,33 @@ class MyJsonClass{
     
     func loadAllDataFromRealm()
     {
-        AllAccounts = realm.objects(Account.self)
-        if (AllAccounts.count == 0) {
+        allAccounts = realm.objects(Account.self)
+        print(allAccounts)
+        if (allAccounts.count == 0) {
             getAccount()
-            saveAccounts()
+            if (self.accountList.listAccount.count != 0) {
+                saveAccounts()
+            } else {
+                self.showMessage(messageString: "Error: ")
+            }
         }
-        AllTransaction = realm.objects(Transaction.self)
-        if (AllTransaction.count == 0){
+        allTransaction = realm.objects(Transaction.self)
+        if (allTransaction.count == 0){
             getTransactions()
-            saveTransaction()
+            if (self.transactions.listTransaction.count != 0) {
+                saveTransaction()
+            } else {
+                self.showMessage(messageString: "Error: ")
+            }
         }
-        AllCategory = realm.objects(CategoryTransaction.self)
-        if (AllCategory.count == 0){
+        allCategory = realm.objects(CategoryTransaction.self)
+        if (allCategory.count == 0){
             getCategory()
-            saveCategory()
+            if (self.categoryList.listCategoryTransactions.count != 0) {
+                saveCategory()
+            } else {
+                self.showMessage(messageString: "Error: ")
+            }
         }
         
         //Make an array with dashboard = true
@@ -256,7 +258,7 @@ class MyJsonClass{
         try! realm.write {
             realm.deleteAll()
             }
- 
+        
         //Getting accounts and saving them to Realm
         getAccount()
         saveAccounts()
@@ -274,28 +276,28 @@ class MyJsonClass{
     func updatingTableView()
     {
         try! realm.write {
-            for i in 0...updatingTransactions.ListUpdatingResults.count-1{
-                if (updatingTransactions.ListUpdatingResults[i].payload?.CurrencyCode == "")
+            for i in 0...updatingTransactions.listUpdatingResults.count-1{
+                if (updatingTransactions.listUpdatingResults[i].payload?.currencyCode == "")
                 {
-                    let account = realm.object(ofType: Account.self, forPrimaryKey: updatingTransactions.ListUpdatingResults[i].payload?.account_id)
-                    updatingTransactions.ListUpdatingResults[i].payload?.CurrencyCode = account?.CurrencyCode
+                    let account = realm.object(ofType: Account.self, forPrimaryKey: updatingTransactions.listUpdatingResults[i].payload?.account_id)
+                    updatingTransactions.listUpdatingResults[i].payload?.currencyCode = account?.currencyCode
                 }
-                if (updatingTransactions.ListUpdatingResults[i].payload?.Category?.name == "")
+                if (updatingTransactions.listUpdatingResults[i].payload?.category?.name == "")
                 {
-                    let category = realm.object(ofType: CategoryTransaction.self, forPrimaryKey: updatingTransactions.ListUpdatingResults[i].payload?.Category?.id)
-                    updatingTransactions.ListUpdatingResults[i].payload?.Category?.name = (category?.name)!
+                    let category = realm.object(ofType: CategoryTransaction.self, forPrimaryKey: updatingTransactions.listUpdatingResults[i].payload?.category?.id)
+                    updatingTransactions.listUpdatingResults[i].payload?.category?.name = (category?.name)!
                 }
-                updatingTransactions.ListUpdatingResults[i].checkFlag = true
-                realm.add(updatingTransactions.ListUpdatingResults[i].payload!, update:true)
+                updatingTransactions.listUpdatingResults[i].checkFlag = true
+                realm.add(updatingTransactions.listUpdatingResults[i].payload!, update:true)
             }
         }
     }
     
     func sendingReport(){
         
-        for i in 0...updatingTransactions.ListUpdatingResults.count-1{
-            if (updatingTransactions.ListUpdatingResults[i].checkFlag){
-                postTransaction(SendingUUID: updatingTransactions.ListUpdatingResults[i].uuid!)
+        for i in 0...updatingTransactions.listUpdatingResults.count-1{
+            if (updatingTransactions.listUpdatingResults[i].checkFlag){
+                postTransaction(SendingUUID: updatingTransactions.listUpdatingResults[i].uuid!)
             }
         }
     }
@@ -313,14 +315,14 @@ class MyJsonClass{
             }
             
             let updatingResult: NSArray
-            do{
+            do {
                 updatingResult = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray
                 //parsing json and make an array of transactions
                 if (updatingResult.count > 0){
                     countOfUpdatetedTransactionsFlag = true
                     for index in 0...updatingResult.count-1{
                         let updatedTransaction = UpdatingTransaction(jsonArray: updatingResult[index] as! [String : AnyObject])
-                        self.updatingTransactions.ListUpdatingResults.append(updatedTransaction)
+                        self.updatingTransactions.listUpdatingResults.append(updatedTransaction)
                     }
                 }
             } catch {
@@ -338,8 +340,8 @@ class MyJsonClass{
     {
         try! realm.write {
             //add Accounts to Realm
-            for i in 0...accountList.ListAccount.count-1{
-                realm.add(accountList.ListAccount[i])
+            for i in 0...accountList.listAccount.count-1{
+                realm.add(accountList.listAccount[i])
             }
         }
     }
@@ -348,43 +350,43 @@ class MyJsonClass{
     func saveTransaction()
     {
         try! realm.write {
-            for i in 0...transactions.ListTransaction.count-1{
-                if (transactions.ListTransaction[i].CurrencyCode == "")
+            for i in 0...transactions.listTransaction.count-1{
+                if (transactions.listTransaction[i].currencyCode == "")
                 {
-                    let account = realm.object(ofType: Account.self, forPrimaryKey: transactions.ListTransaction[i].account_id)
-                    transactions.ListTransaction[i].CurrencyCode = account?.CurrencyCode
+                    let account = realm.object(ofType: Account.self, forPrimaryKey: transactions.listTransaction[i].account_id)
+                    transactions.listTransaction[i].currencyCode = account?.currencyCode
                 }
-                realm.add(transactions.ListTransaction[i], update:true)
+                realm.add(transactions.listTransaction[i], update:true)
             }
         }
     }
     
     func saveCategory(){
         try! realm.write {
-            for i in 0...categoryList.ListCategoryTransactions.count-1{
-                realm.add(categoryList.ListCategoryTransactions[i], update:true)
+            for i in 0...categoryList.listCategoryTransactions.count-1{
+                realm.add(categoryList.listCategoryTransactions[i], update:true)
             }
         }
     }
     
     func makeArray(){
-        let predicate = NSPredicate(format: "ShowOnDashboard == 1")
-        AllAccounts = realm.objects(Account.self).filter(predicate)
+        let predicate = NSPredicate(format: "isAccountShow == 1")
+        allAccounts = realm.objects(Account.self).filter(predicate)
         return
     }
     
     func makeCategoryArray(){
-        AllCategory = realm.objects(CategoryTransaction.self)
+        allCategory = realm.objects(CategoryTransaction.self)
     }
     
     
     func makeSectionsArray() {
         let spDate:Date = Calendar.current.date(byAdding: .day, value: -15, to: Date())!
         
-        let predicate = NSPredicate(format: "MadeOn > %@", spDate as CVarArg) //+predicate 15 days
+        let predicate = NSPredicate(format: "madeOn > %@", spDate as CVarArg) //+predicate 15 days
         
-        AllTransaction = realm.objects(Transaction.self).filter(predicate).sorted(by: ["MadeOn", "Description"])
-        //AllTransaction = realm.objects(Transaction).sorted(by: ["MadeOn"])
+        allTransaction = realm.objects(Transaction.self).filter(predicate).sorted(by: ["madeOn", "descriptionOfTransaction"])
+        //allTransaction = realm.objects(Transaction).sorted(by: ["MadeOn"])
     }
     
     func makeExpendedCategories(){
@@ -406,8 +408,7 @@ class MyJsonClass{
         if allEntries.count > 0 {
             let lastId = allEntries.max(ofProperty: "id") as Int?
             return lastId! + 1
-        }
-        else {
+        } else {
             return 1
         }
     }
