@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Exmoney
+//@testable import Exmoney
 
 class AccountClassTest: XCTestCase {
     
@@ -37,7 +37,7 @@ class AccountClassTest: XCTestCase {
         //accountViewController.viewDidLoad()
         //let tableView = accountViewController.tableView2 as UITableView
         
-        //XCTAssertNotNil(accountViewController.calculateHightOfTableView(rowCount: accountViewController.AllTransaction.count, rowHeight: tableView.rowHeight, numberOfSections: tableView.numberOfSections, sectionHeaderHeight: tableView.sectionHeaderHeight))
+        //XCTAssertNotNil(accountViewController.calculateHightOfTableView(rowCount: accountViewController.allTransaction.count, rowHeight: tableView.rowHeight, numberOfSections: tableView.numberOfSections, sectionHeaderHeight: tableView.sectionHeaderHeight))
     }*/
     
     func testWriteValueBack(){

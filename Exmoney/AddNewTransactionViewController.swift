@@ -11,20 +11,18 @@ import RealmSwift
 import DatePickerCell
 
 protocol addingTransactionDelegate: class {
-    func addingDelegate(addTransaction: Transaction) //This function will send the data back to origin viewcontroller.
+    func addingDelegate(addTransaction: Transaction) //This function send the data back to origin ViewController.
 }
 
 // convert string with "." and "," to float value
 extension String {
     var myFloatConverter: Float {
         let converter = NumberFormatter()
-        
         converter.decimalSeparator = ","
         if let result = converter.number(from: self) {
             return result.floatValue
             
         } else {
-            
             converter.decimalSeparator = "."
             if let result = converter.number(from: self) {
                 return result.floatValue
@@ -34,7 +32,7 @@ extension String {
     }
 }
 
-class AddNewTransactionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TrendingProductsCustomDelegate, UITextViewDelegate  {
+class AddNewTransactionViewController: UIViewController {
 
     weak var delegateTransaction:addingTransactionDelegate?
     
@@ -51,7 +49,7 @@ class AddNewTransactionViewController: UIViewController, UITableViewDataSource, 
     var valueNames:[String] = ["Cash >", "Uncategorized >", ""]
     
     var dateFormatterRow = DateFormatter()
-    var AccountArray : Results<Account>!
+    var accountArray : Results<Account>!
     var category:String!
     let date = Date()
     var strDate:String!
@@ -69,9 +67,9 @@ class AddNewTransactionViewController: UIViewController, UITableViewDataSource, 
         let categoryTransact = CategoryTransaction()
         categoryTransact.id = 14
         categoryTransact.name = "Uncategorized >"
-        newTransaction.Category = categoryTransact
+        newTransaction.category = categoryTransact
         newTransaction.id = getNewTransactionID()
-        newTransaction.CurrencyCode = ""
+        newTransaction.currencyCode = ""
         
         //Set Date
         dateFormatterRow.dateFormat = "yyyy-MM-dd"
@@ -136,152 +134,24 @@ class AddNewTransactionViewController: UIViewController, UITableViewDataSource, 
         //let cell:TextFiledTableViewCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! TextFiledTableViewCell
         if cell.TextFieldCell.text != "0" {
             
-            newTransaction.Amount_millicents = -1 * stringToAmountMillicent(stringAmount: cell.TextFieldCell.text!)
+            newTransaction.amount_millicents = -1 * stringToAmountMillicent(stringAmount: cell.TextFieldCell.text!)
             
-            if (flagIncome){
-                newTransaction.Amount_millicents = newTransaction.Amount_millicents * -1
+            if (flagIncome) {
+                newTransaction.amount_millicents = newTransaction.amount_millicents * -1
             }
-            newTransaction.Description = (tableView.cellForRow(at: IndexPath(row: 4, section: 0)) as! TextFieldTableViewCell).TextFieldCell.text
-            newTransaction.MadeOn = dateFormatterRow.date(from: ((tableView.cellForRow(at: IndexPath(row: 3, section: 0)) as! UITableViewCell).detailTextLabel?.text!)!)
+            newTransaction.descriptionOfTransaction = (tableView.cellForRow(at: IndexPath(row: 4, section: 0)) as! TextFieldTableViewCell).TextFieldCell.text
+            newTransaction.madeOn = dateFormatterRow.date(from: ((tableView.cellForRow(at: IndexPath(row: 3, section: 0)) as! UITableViewCell).detailTextLabel?.text!)!)
             
             delegateTransaction?.addingDelegate(addTransaction: newTransaction)
             
             self.dismiss(animated: true, completion: nil)
-        }
-        else {
+        } else {
             let messagePost:String = "Some fields have no value. Please check it"
             let alert = UIAlertController(title: "Alert", message: messagePost, preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             return
         }
-    }
-    
-    func sendDataBackToHomePageViewController(categoryToRefresh: CategoryTransaction) { //Custom delegate function which was defined inside child class to get the data and do the other stuffs.
-        if categoryToRefresh != nil {
-            newTransaction.Category = categoryToRefresh
-            valueNames[1] = categoryToRefresh.name
-            let indexPath = IndexPath(row: 2, section:0)
-            tableView.beginUpdates()
-            tableView.reloadRows(at: [indexPath], with: .top)
-            tableView.endUpdates()
-        }
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (datePickerIndexPath != nil){
-            return 6
-        }
-        else {return 5}
-    }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if datePickerIndexPath != nil && datePickerIndexPath!.row == indexPath.row {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "datePickerCell") as! DatePickerTableViewCell
-            cell.DatePicker.setDate(date, animated: true)
-            cell.DatePicker.addTarget(self, action: #selector(AddNewTransactionViewController.datePickerValueChanged), for: .valueChanged)
-            return cell
-        }
-            else {
-                if (indexPath.row == 0){
-                    let cell = Bundle.main.loadNibNamed("TextFieldTableViewCell", owner: self, options: nil)?.first as! TextFieldTableViewCell
-                    cell.NameLbl.text = "Amount"
-                    cell.TextFieldCell.text = "0"
-                    cell.TextFieldCell.textColor = UIColor.gray
-                    cell.TextFieldCell.keyboardType = UIKeyboardType.decimalPad
-                    return cell
-                }
-                else {
-                    if (indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 3){
-                        let cell = tableView.dequeueReusableCell(withIdentifier: "addTransactionCell", for: indexPath)
-                        cell.textLabel?.text = titelNames[indexPath.row - 1]
-                        cell.detailTextLabel?.text = valueNames[indexPath.row - 1]
-                        cell.detailTextLabel?.textColor = UIColor.gray
-                        return cell
-                    }
-                    else {
-                        let cell = Bundle.main.loadNibNamed("TextFieldTableViewCell", owner: self, options: nil)?.first as! TextFieldTableViewCell
-                        cell.NameLbl.text = "Note"
-                        cell.TextFieldCell.text = "Note"
-                        cell.TextFieldCell.textColor = UIColor.gray
-                        //cell.TextFieldCell.delegate = self as! UITextFieldDelegate ????
-                        return cell
-                        }
-                    }
-            }
-    }
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n"  // Recognizes enter key in keyboard
-        {
-            textView.resignFirstResponder()
-            return false
-        }
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (indexPath.row == 1)
-        {
-            self.view.endEditing(true)
-            makeArrayOfAccounts()
-            let alert = UIAlertController(title: "Account", message: "Please Choose Account", preferredStyle: .actionSheet)
-            for index in 0...AccountArray.count-1{
-                alert.addAction(UIAlertAction(title: AccountArray[index].Name, style: .default, handler: { (action) in
-                    self.valueNames[0] = self.AccountArray[index].Name
-                    let indexPath = IndexPath(row: 1, section:0)
-                    tableView.beginUpdates()
-                    tableView.reloadRows(at: [indexPath], with: .top)
-                    tableView.endUpdates()
-                    self.newTransaction.account_id = self.AccountArray[index].id_acc
-                }))
-            }
-            
-            self.present(alert, animated: true, completion: {
-            })
-
-        }
-        
-        if (indexPath.row == 2){
-            popUpList = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "popUpListID") as! PopUpListViewController
-            
-            //self.present(popUpList, animated: true, completion: nil)
-            self.view.endEditing(true)
-            popUpList.customDelegateForDataReturn = self
-            self.addChildViewController(popUpList)
-            popUpList.view.frame = self.view.frame
-            self.view.addSubview(popUpList.view)
-            popUpList.didMove(toParentViewController: self)
-        }
-        if (indexPath.row == 3)
-        {
-            tableView.beginUpdates()
-            if datePickerIndexPath != nil && datePickerIndexPath!.row - 1 == indexPath.row { // case 2
-                tableView.deleteRows(at: [datePickerIndexPath!], with: .fade)
-                datePickerIndexPath = nil
-            } else { // case 1、3
-                if datePickerIndexPath != nil { // case 3
-                    tableView.deleteRows(at: [datePickerIndexPath!], with: .fade)
-                }
-                datePickerIndexPath = calculateDatePickerIndexPath(indexPathSelected: indexPath)
-                tableView.insertRows(at: [datePickerIndexPath!], with: .fade)
-            }
-            tableView.deselectRow(at: indexPath, animated: true)
-            tableView.endUpdates()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var rowHeight = tableView.rowHeight
-        if datePickerIndexPath != nil && datePickerIndexPath!.row == indexPath.row {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "datePickerCell")!
-            rowHeight = 200
-        }
-        return rowHeight
     }
     
     func calculateDatePickerIndexPath(indexPathSelected: IndexPath) -> IndexPath {
@@ -300,23 +170,21 @@ class AddNewTransactionViewController: UIViewController, UITableViewDataSource, 
         tableView.endUpdates()
     }
     
-    func getNewTransactionID() -> Int{
+    func getNewTransactionID() -> Int {
         let allEntries = realm.objects(Transaction.self)
         if allEntries.count > 0 {
             let lastId = allEntries.max(ofProperty: "id") as Int?
             return lastId! + 1
-        }
-        else {
+        } else {
             return 1
         }
     }
     
-    func backAction(){
+    func backAction() {
         dismiss(animated: true, completion: nil)
     }
     
-    func amountToString(amount_millic: Int) ->String // make string value from amount_millicents
-    {
+    func amountToString(amount_millic: Int) ->String {// make string value from amount_millicents
         let stringAmount:String
         let decimalAmount:Decimal
         decimalAmount = Decimal(amount_millic)
@@ -324,23 +192,21 @@ class AddNewTransactionViewController: UIViewController, UITableViewDataSource, 
         return stringAmount
     }
     
-    func stringToAmountMillicent(stringAmount: String)->Int // make amount_millicents from string value
-    {
+    func stringToAmountMillicent(stringAmount: String)->Int {// make amount_millicents from string value
         let amountMillicent: Int
         let floatNumber: Float = stringAmount.myFloatConverter * 1000
         amountMillicent = Int(floatNumber)
-        
         return amountMillicent
     }
     
-    func makeArrayOfAccounts(){ // make list of Accounts
-        AccountArray = realm.objects(Account).filter("SaltedgeAccountId = 1")
+    func makeArrayOfAccounts() { // make list of Accounts
+        print(realm.objects(Account))
+        accountArray = realm.objects(Account).filter("isSaltedgeAccountIdShow = 0")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
     /*
     // MARK: - Navigation
 
@@ -350,5 +216,136 @@ class AddNewTransactionViewController: UIViewController, UITableViewDataSource, 
         // Pass the selected object to the new view controller.
     }
     */
+}
 
+//MARK: - UITableViewDataSource
+extension AddNewTransactionViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (datePickerIndexPath != nil) {
+            return 6
+        } else {
+            return 5
+            
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if datePickerIndexPath != nil && datePickerIndexPath!.row == indexPath.row {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "datePickerCell") as! DatePickerTableViewCell
+            cell.datePicker.setDate(date, animated: true)
+            cell.datePicker.addTarget(self, action: #selector(AddNewTransactionViewController.datePickerValueChanged), for: .valueChanged)
+            return cell
+        } else {
+            if (indexPath.row == 0) {
+                let cell = Bundle.main.loadNibNamed("TextFieldTableViewCell", owner: self, options: nil)?.first as! TextFieldTableViewCell
+                cell.NameLbl.text = "Amount"
+                cell.TextFieldCell.text = "0"
+                cell.TextFieldCell.textColor = UIColor.gray
+                cell.TextFieldCell.keyboardType = UIKeyboardType.decimalPad
+                return cell
+            } else {
+                if (indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 3) {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "addTransactionCell", for: indexPath)
+                    cell.textLabel?.text = titelNames[indexPath.row - 1]
+                    cell.detailTextLabel?.text = valueNames[indexPath.row - 1]
+                    cell.detailTextLabel?.textColor = UIColor.gray
+                    return cell
+                } else {
+                    let cell = Bundle.main.loadNibNamed("TextFieldTableViewCell", owner: self, options: nil)?.first as! TextFieldTableViewCell
+                    cell.NameLbl.text = "Note"
+                    cell.TextFieldCell.text = "Note"
+                    cell.TextFieldCell.textColor = UIColor.gray
+                    //cell.TextFieldCell.delegate = self as! UITextFieldDelegate ????
+                    return cell
+                }
+            }
+        }
+    }
+}
+
+//MARK: - UITableViewDelegate
+extension AddNewTransactionViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        var rowHeight = tableView.rowHeight
+        if datePickerIndexPath != nil && datePickerIndexPath!.row == indexPath.row {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "datePickerCell")!
+            rowHeight = 200
+        }
+        return rowHeight
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath.row == 1) {
+            self.view.endEditing(true)
+            makeArrayOfAccounts()
+            let alert = UIAlertController(title: "Account", message: "Please Choose Account", preferredStyle: .actionSheet)
+            for index in 0...accountArray.count-1 {
+                alert.addAction(UIAlertAction(title: accountArray[index].name, style: .default, handler: { (action) in
+                    self.valueNames[0] = self.accountArray[index].name
+                    let indexPath = IndexPath(row: 1, section:0)
+                    tableView.beginUpdates()
+                    tableView.reloadRows(at: [indexPath], with: .top)
+                    tableView.endUpdates()
+                    self.newTransaction.account_id = self.accountArray[index].id_acc
+                }))
+            }
+            self.present(alert, animated: true, completion: {
+            })
+        }
+        
+        if (indexPath.row == 2) {
+            popUpList = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "popUpListID") as! PopUpListViewController
+            
+            //self.present(popUpList, animated: true, completion: nil)
+            self.view.endEditing(true)
+            popUpList.customDelegateForDataReturn = self
+            self.addChildViewController(popUpList)
+            popUpList.view.frame = self.view.frame
+            self.view.addSubview(popUpList.view)
+            popUpList.didMove(toParentViewController: self)
+        }
+        if (indexPath.row == 3) {
+            tableView.beginUpdates()
+            if datePickerIndexPath != nil && datePickerIndexPath!.row - 1 == indexPath.row { // case 2
+                tableView.deleteRows(at: [datePickerIndexPath!], with: .fade)
+                datePickerIndexPath = nil
+            } else { // case 1、3
+                if datePickerIndexPath != nil { // case 3
+                    tableView.deleteRows(at: [datePickerIndexPath!], with: .fade)
+                }
+                datePickerIndexPath = calculateDatePickerIndexPath(indexPathSelected: indexPath)
+                tableView.insertRows(at: [datePickerIndexPath!], with: .fade)
+            }
+            tableView.deselectRow(at: indexPath, animated: true)
+            tableView.endUpdates()
+        }
+    }
+}
+
+//MARK: - TrendingProductsCustomDelegate
+extension AddNewTransactionViewController: TrendingProductsCustomDelegate {
+    func sendingCategoryToHomePageViewController(categoryToRefresh: CategoryTransaction) { //Custom delegate function which was defined inside child class to get the data and do the other stuffs.
+        newTransaction.category = categoryToRefresh
+        valueNames[1] = categoryToRefresh.name
+        let indexPath = IndexPath(row: 2, section:0)
+        tableView.beginUpdates()
+        tableView.reloadRows(at: [indexPath], with: .top)
+        tableView.endUpdates()
+    }
+}
+
+//MARK: - UITextViewDelegate
+extension AddNewTransactionViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" { // Recognizes enter key in keyboard
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
 }

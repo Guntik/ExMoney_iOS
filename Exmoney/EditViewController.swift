@@ -14,7 +14,7 @@ protocol writeValueBackDelegate:class {
 }
 
 
-class EditViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TrendingProductsCustomDelegate, UITextFieldDelegate {
+class EditViewController: UIViewController {
     
     @IBOutlet weak var labelText: UILabel!
     
@@ -31,34 +31,18 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     var categoryToUpdate:CategoryTransaction!
     var noteToUpdate:String?
     var labelInformation:String?
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    func sendDataBackToHomePageViewController(categoryToRefresh: CategoryTransaction) { //Custom delegate function which was defined inside child class to get the data and do the other stuffs.
-        categoryToUpdate = categoryToRefresh
-        if categoryToRefresh != nil {
-            let indexPath = IndexPath(row: 0, section:0)
-            tableView.beginUpdates()
-            tableView.reloadRows(at: [indexPath], with: .top)
-            tableView.endUpdates()
-            
-        }
-    }
-    
+
     @IBAction func updateButtonAction(_ sender: Any) {
         let indexPath = IndexPath(row: 1, section: 0)
         editNote = (tableView.cellForRow(at: indexPath) as? TextFieldTableViewCell)?.TextFieldCell.text
-        delegate?.writeValueBack(sendBackCategory: categoryToUpdate , sendBackNote: editNote!)//nil
+        if (categoryToUpdate != nil && !editNote.isEmpty) {
+            delegate?.writeValueBack(sendBackCategory: categoryToUpdate , sendBackNote: editNote!)
+        }
         dismiss(animated: true, completion: nil)
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         BarItem.title = "Editing Transaction"
         BarItem.leftBarButtonItem = UIBarButtonItem(title: "← Back", style: .plain, target: self, action: #selector(backAction))
         tableView.tableFooterView = UIView(frame: CGRect.zero)
@@ -83,60 +67,7 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         dismiss(animated: true, completion: nil)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (indexPath.row == 1) {
-            let cell = Bundle.main.loadNibNamed("TextFieldTableViewCell", owner: self, options: nil)?.first as! TextFieldTableViewCell
-            //let cell = tableView.dequeueReusableCell(withIdentifier: "textCell", for: indexPath) as! TextFiledTableViewCell
-            cell.NameLbl.text = "Note"
-            cell.TextFieldCell.text = noteToUpdate
-            cell.TextFieldCell.font = UIFont(name: "Helvetica Neue", size: 14.0)
-            cell.TextFieldCell.textColor = UIColor.gray
-            
-            //cell.detailTextLabel?.numberOfLines = 0
-            if (noteToUpdate == "")
-            {
-                cell.TextFieldCell.text = "Note"
-            }
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! UITableViewCell
-            cell.textLabel?.text = "Category"
-            cell.detailTextLabel?.text = categoryToUpdate.name + " >"
-            cell.detailTextLabel?.textColor = UIColor.gray
-            cell.textLabel?.font = UIFont(name:"Helvetica Neue", size: 15.0)
-            return cell
-        }
-   
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let indexPath = tableView.indexPathForSelectedRow
-        if (indexPath?.row == 0){
-            let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "popUpListID") as! PopUpListViewController
-            //self.present(popOverVC, animated: true, completion: nil)
-            popOverVC.customDelegateForDataReturn = self
-            self.addChildViewController(popOverVC)
-            popOverVC.view.frame = self.view.frame
-            self.view.addSubview(popOverVC.view)
-            popOverVC.didMove(toParentViewController: self)
-        }
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (indexPath.row != 1){
-            return UITableViewAutomaticDimension}
-        else {
-            return 55
-        }
-    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -157,5 +88,82 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Pass the selected object to the new view controller.
     }
     */
+}
 
+//MARK: - UITableViewDelegate
+extension EditViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (indexPath.row != 1){
+            return UITableViewAutomaticDimension
+        } else {
+            return 55
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let indexPath = tableView.indexPathForSelectedRow
+        if (indexPath?.row == 0){
+            let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "popUpListID") as! PopUpListViewController
+            //self.present(popOverVC, animated: true, completion: nil)
+            popOverVC.customDelegateForDataReturn = self
+            self.addChildViewController(popOverVC)
+            popOverVC.view.frame = self.view.frame
+            self.view.addSubview(popOverVC.view)
+            popOverVC.didMove(toParentViewController: self)
+        }
+    }
+}
+
+//MARK: - UITableViewDataSource
+extension EditViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath.row == 1) {
+            let cell = Bundle.main.loadNibNamed("TextFieldTableViewCell", owner: self, options: nil)?.first as! TextFieldTableViewCell
+            //let cell = tableView.dequeueReusableCell(withIdentifier: "textCell", for: indexPath) as! TextFiledTableViewCell
+            cell.NameLbl.text = "Note"
+            cell.TextFieldCell.text = noteToUpdate
+            cell.TextFieldCell.font = UIFont(name: "Helvetica Neue", size: 14.0)
+            cell.TextFieldCell.textColor = UIColor.gray
+            
+            //cell.detailTextLabel?.numberOfLines = 0
+            if (noteToUpdate == "") {
+                cell.TextFieldCell.text = "Note"
+            }
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! UITableViewCell
+            cell.textLabel?.text = "Category"
+            cell.detailTextLabel?.text = categoryToUpdate.name + " >"
+            cell.detailTextLabel?.textColor = UIColor.gray
+            cell.textLabel?.font = UIFont(name:"Helvetica Neue", size: 15.0)
+            return cell
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+}
+
+//MARK: - TrendingProductsCustomDelegate
+extension EditViewController: TrendingProductsCustomDelegate {
+    func sendingCategoryToHomePageViewController(categoryToRefresh: CategoryTransaction) { //Custom delegate function which was defined inside child class to get the data and do the other stuffs.
+        categoryToUpdate = categoryToRefresh
+        let indexPath = IndexPath(row: 0, section:0)
+        tableView.beginUpdates()
+        tableView.reloadRows(at: [indexPath], with: .top)
+        tableView.endUpdates()
+    }
+}
+
+//MARK: - UITextFieldDelegate
+extension EditViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }

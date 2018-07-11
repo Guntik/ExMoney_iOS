@@ -11,6 +11,7 @@
 		1F1941C61F56C8010014AB5D /* ShowTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1941C51F56C8010014AB5D /* ShowTransactionViewController.swift */; };
 		1F1941C81F56DD960014AB5D /* AddNewTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1941C71F56DD960014AB5D /* AddNewTransactionViewController.swift */; };
 		1F1F8CB81E8A822300759EFF /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1F8CB71E8A822300759EFF /* EditViewController.swift */; };
+		1F3D890020F4EA9E006B0FA6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1F3D88FF20F4EA9E006B0FA6 /* README.md */; };
 		1F451FDF1E68589800E144A7 /* AccountClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F451FDE1E68589700E144A7 /* AccountClass.swift */; };
 		1F5A85A51E73494D00597576 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 1F5A85A41E73494D00597576 /* Podfile */; };
 		1F8ABEE5204D7F6100D2CD19 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8ABEE3204D7F6100D2CD19 /* TransactionTableViewCell.swift */; };
@@ -79,6 +80,7 @@
 		1F1941C51F56C8010014AB5D /* ShowTransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowTransactionViewController.swift; sourceTree = "<group>"; };
 		1F1941C71F56DD960014AB5D /* AddNewTransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewTransactionViewController.swift; sourceTree = "<group>"; };
 		1F1F8CB71E8A822300759EFF /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		1F3D88FF20F4EA9E006B0FA6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1F451FDE1E68589700E144A7 /* AccountClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountClass.swift; sourceTree = "<group>"; };
 		1F5A85A41E73494D00597576 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		1F8ABEE3204D7F6100D2CD19 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		1FE938CD1E449AAD00D9F0BF = {
 			isa = PBXGroup;
 			children = (
+				1F3D88FF20F4EA9E006B0FA6 /* README.md */,
 				1F5A85A41E73494D00597576 /* Podfile */,
 				1FE938D81E449AAD00D9F0BF /* Exmoney */,
 				1FE938F81E449AAE00D9F0BF /* ExmoneyUITests */,
@@ -385,6 +388,7 @@
 				1F5A85A51E73494D00597576 /* Podfile in Resources */,
 				1F8ABEEA204D84C400D2CD19 /* TextFieldTableViewCell.xib in Resources */,
 				1FD5085E1E826C7100B8A9DC /* TableViewCell2.xib in Resources */,
+				1F3D890020F4EA9E006B0FA6 /* README.md in Resources */,
 				1FE938DF1E449AAD00D9F0BF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

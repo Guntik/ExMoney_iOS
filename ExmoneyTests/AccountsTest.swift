@@ -25,25 +25,25 @@ class AccountsTest: XCTestCase {
     func testAccountBalance(){
         let balance = 1000
         let account = Account()
-        XCTAssertNotNil(account.Balance_millicents)
-        account.Balance_millicents = 1000
-        XCTAssertEqual(account.Balance_millicents, balance)
+        XCTAssertNotNil(account.balance_millicents)
+        account.balance_millicents = 1000
+        XCTAssertEqual(account.balance_millicents, balance)
     }
     
     func testAccountName(){
         let Name = "AccountName"
         let account = Account()
-        XCTAssertNotNil(account.Name)
-        account.Name = "AccountName"
-        XCTAssertEqual(account.Name, Name)
+        XCTAssertNotNil(account.name)
+        account.name = "AccountName"
+        XCTAssertEqual(account.name, Name)
     }
     
     func testAccountCurrencyCode(){
         let CurrecncyCode = "Code"
         let account = Account()
-        XCTAssertNotNil(account.CurrencyCode)
-        account.CurrencyCode = "Code"
-        XCTAssertEqual(account.CurrencyCode, CurrecncyCode)
+        XCTAssertNotNil(account.currencyCode)
+        account.currencyCode = "Code"
+        XCTAssertEqual(account.currencyCode, CurrecncyCode)
     }
     
     func testAccountId(){
@@ -54,22 +54,22 @@ class AccountsTest: XCTestCase {
         XCTAssertEqual(account.id_acc, ID)
     }
     
-    func testAccountShowOnDashboard(){
+    /*func testAccountShowOnDashboard(){
         let show = true
         let account = Account()
-        XCTAssertNotNil(account.ShowOnDashboard)
-        account.ShowOnDashboard = true
-        XCTAssertEqual(account.ShowOnDashboard, show)
+        XCTAssertNotNil(account.isAccountShow)
+        account.isAccountShow = true
+        XCTAssertEqual(account.isAccountShow, show)
     }
     
     func testAccountSaltadge(){
         let saltage = false
         let account = Account()
-        XCTAssertNotNil(account.SaltedgeAccountId)
-        account.SaltedgeAccountId = false
-        XCTAssertEqual(account.SaltedgeAccountId, saltage)
+        XCTAssertNotNil(account.isSaltedgeAccountIdShow)
+        account.saltedgeAccountId = false
+        XCTAssertEqual(account.isSaltedgeAccountIdShow, saltage)
         
-    }
+    }*/
 }
 
 

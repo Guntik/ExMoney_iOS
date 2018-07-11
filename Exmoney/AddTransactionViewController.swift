@@ -21,11 +21,9 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     weak var delegateTransaction:addingTransactionDelegate?
     
     // from the PopUpView with list Category send choice
-    func sendDataBackToHomePageViewController(categoryToRefresh: CategoryTransaction) { //Custom delegate function which was defined inside child class to get the data and do the other stuffs.
-        if categoryToRefresh != nil {
-            categoryTextField.text = categoryToRefresh.name
-            newTransaction.Category = categoryToRefresh
-        }
+    func sendingCategoryToHomePageViewController(categoryToRefresh: CategoryTransaction) { //Custom delegate function which was defined inside child class to get the data and do the other stuffs.
+        categoryTextField.text = categoryToRefresh.name
+        newTransaction.category = categoryToRefresh
     }
 
     @IBOutlet weak var transactionBarItem: UINavigationItem!
@@ -47,7 +45,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     @IBOutlet weak var accountTextField: UITextField!
     
     var dateFormatter = DateFormatter()
-    var AccountArray : Results<Account>!
+    var accountArray : Results<Account>!
     var category:String!
     let date = Date()
 
@@ -61,12 +59,12 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         let categoryTransact = CategoryTransaction()
         categoryTransact.id = 14
         categoryTransact.name = "Uncategorized >"
-        newTransaction.Category = categoryTransact
+        newTransaction.category = categoryTransact
         categoryTextField.text = categoryTransact.name
         
         newTransaction.id = getNewTransactionID()
         
-        newTransaction.CurrencyCode = ""
+        newTransaction.currencyCode = ""
         
         //Set Date
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -118,7 +116,6 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     {
         datePickerView.removeFromSuperview()
         toolBar.removeFromSuperview()
-        
     }
     
     
@@ -127,7 +124,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         //dateFormatter.dateStyle = DateFormatter.Style.short
         //dateFormatter.timeStyle = DateFormatter.Style.short
         
-        var strDate = dateFormatter.string(from: datePicker.date)
+        let strDate = dateFormatter.string(from: datePicker.date)
         dateTextField.text = strDate
     }
     @IBAction func accountEditingDidBegin(_ sender: Any) {
@@ -135,11 +132,11 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         self.view.endEditing(true)
         makeArrayOfAccounts()
         let alert = UIAlertController(title: "Account", message: "Please Choose Account", preferredStyle: .actionSheet)
-        for index in 0...AccountArray.count-1{
-            alert.addAction(UIAlertAction(title: AccountArray[index].Name, style: .default, handler: { (action) in
+        for index in 0...accountArray.count-1{
+            alert.addAction(UIAlertAction(title: accountArray[index].name, style: .default, handler: { (action) in
                 //execute some code when this option is selected
-                self.accountTextField.text = self.AccountArray[index].Name
-                self.newTransaction.account_id = self.AccountArray[index].id_acc
+                self.accountTextField.text = self.accountArray[index].name
+                self.newTransaction.account_id = self.accountArray[index].id_acc
             }))
         }
         
@@ -165,20 +162,19 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     @IBAction func addButtonAction(_ sender: Any) {
         if (amountTextField.text != nil && categoryTextField.text != nil && accountTextField.text != nil && dateTextField.text != nil) {
             
-            newTransaction.Amount_millicents = -1 * stringToAmountMillicent(stringAmount: amountTextField.text!)
+            newTransaction.amount_millicents = -1 * stringToAmountMillicent(stringAmount: amountTextField.text!)
             
             if (flagIncome){
-                newTransaction.Amount_millicents = newTransaction.Amount_millicents * -1
+                newTransaction.amount_millicents = newTransaction.amount_millicents * -1
             }
-            newTransaction.Description = noteTextField.text!
-            newTransaction.MadeOn = dateFormatter.date(from: dateTextField.text!)
+            newTransaction.descriptionOfTransaction = noteTextField.text!
+            newTransaction.madeOn = dateFormatter.date(from: dateTextField.text!)
             
             
             delegateTransaction?.addingDelegate(addTransaction: newTransaction)
             
             self.dismiss(animated: true, completion: nil)
-        }
-        else {
+        } else {
             let messagePost:String = "Some fields have no value. Please check it"
             let alert = UIAlertController(title: "Alert", message: messagePost, preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
@@ -224,7 +220,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
 
     func makeArrayOfAccounts(){ // make list of Accounts
         let predicate = NSPredicate(format: "SaltedgeAccountId == 0")
-        AccountArray = realm.objects(Account).filter(predicate)
+        accountArray = realm.objects(Account).filter(predicate)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

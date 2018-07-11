@@ -10,8 +10,6 @@ import UIKit
 
 class ViewController: UIViewController {
 
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setToolbarHidden(true, animated: false)
@@ -22,12 +20,10 @@ class ViewController: UIViewController {
         
         //First opening App goes to Form with URL, Pass and Email
             self.performSegue(withIdentifier: "URLView", sender: self)
-        }
-        else {
+        } else {
             //self.performSegue(withIdentifier: "accountsSeque", sender: self)
             self.performSegue(withIdentifier: "accountsSeque1", sender: self)
         }
-        
     }
     
     

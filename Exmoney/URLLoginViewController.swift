@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 
 
-class URLLoginViewController: UIViewController, UITextFieldDelegate {
+class URLLoginViewController: UIViewController {
     
     @IBOutlet weak var URLTextField: UITextField!
     
@@ -68,12 +68,7 @@ class URLLoginViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //self.view.endEditing(true)
-        textField.resignFirstResponder()
-        return true
-    }
+
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -85,17 +80,16 @@ class URLLoginViewController: UIViewController, UITextFieldDelegate {
         url = URLTextField.text!
         
         //check the Textfields
-        if (email != nil && password != nil && url != nil) {
+        if (!email.isEmpty && !password.isEmpty && !url.isEmpty) {
 
         //Post Method, get Token
-        postToken()
+            postToken(url: url, email: email, password: password)
         
         if (flagAccount)
         {
             //self.performSegue(withIdentifier: "ViewTableView", sender: self)
             self.performSegue(withIdentifier: "ViewTableView1", sender: self)
-        }
-        else {
+        } else {
             // Message empty fields
             let message:String = "You have empty fields"
             let alert = UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertControllerStyle.alert)
@@ -107,7 +101,7 @@ class URLLoginViewController: UIViewController, UITextFieldDelegate {
     }
     var flagAccount:Bool = false
     
-    func postToken()
+    func postToken(url: String, email: String, password: String)
     {
         DispatchQueue.global(qos: .userInitiated).async { }
         let urlPost = url + "/api/v2/login"
@@ -173,21 +167,24 @@ class URLLoginViewController: UIViewController, UITextFieldDelegate {
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             self.flagAccount = false
-        }
-        else {
+        } else {
             self.flagAccount = true
         }
         //return
     }
-    
-    
-    
+
     var url:String = ""
     var email:String = ""
     var password:String = ""
+}
 
-        
-    
+//MARK: - UITextFieldDelegate
+extension URLLoginViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        //self.view.endEditing(true)
+        textField.resignFirstResponder()
+        return true
+    }
 }
 
 

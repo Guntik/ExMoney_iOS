@@ -100,7 +100,6 @@ class MyJsonClass{
     
     func getCategory(){
         let request = setRequest(urlAddition: "/api/v2/categories")
-        
         let semaphore = DispatchSemaphore(value: 0)
         URLSession.shared.dataTask(with: request){
             data, response, error in
@@ -112,8 +111,7 @@ class MyJsonClass{
             do {
                 categoryResult = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray
                 //parsing json and make an array of categories
-                for index in 0...categoryResult.count-1{
-                    
+                for index in 0...categoryResult.count-1 {
                     let category = CategoryTransaction(jsonArray: categoryResult[index] as! [String : AnyObject])
                     self.categoryList.listCategoryTransactions.append(category)
                 }
@@ -221,34 +219,11 @@ class MyJsonClass{
     func loadAllDataFromRealm()
     {
         allAccounts = realm.objects(Account.self)
-        print(allAccounts)
-        if (allAccounts.count == 0) {
-            getAccount()
-            if (self.accountList.listAccount.count != 0) {
-                saveAccounts()
-            } else {
-                self.showMessage(messageString: "Error: ")
-            }
-        }
         allTransaction = realm.objects(Transaction.self)
-        if (allTransaction.count == 0){
-            getTransactions()
-            if (self.transactions.listTransaction.count != 0) {
-                saveTransaction()
-            } else {
-                self.showMessage(messageString: "Error: ")
-            }
-        }
         allCategory = realm.objects(CategoryTransaction.self)
-        if (allCategory.count == 0){
-            getCategory()
-            if (self.categoryList.listCategoryTransactions.count != 0) {
-                saveCategory()
-            } else {
-                self.showMessage(messageString: "Error: ")
-            }
+        if (allAccounts.count == 0 || allTransaction.count == 0 || allCategory.count == 0) {
+            initiateAllArrays()
         }
-        
         //Make an array with dashboard = true
         makeArray()
         makeSectionsArray()
@@ -257,20 +232,28 @@ class MyJsonClass{
     func initiateAllArrays(){
         try! realm.write {
             realm.deleteAll()
-            }
-        
+        }
         //Getting accounts and saving them to Realm
         getAccount()
-        saveAccounts()
- 
-        //Get Category
-        getCategory()
- 
+        if (self.accountList.listAccount.count != 0) {
+            saveAccounts()
+        } else {
+            self.showMessage(messageString: "Error: ")
+        }
         //Get Transactions
         getTransactions()
- 
-        saveTransaction() //save Transactions
-        saveCategory() //save Category
+        if (self.transactions.listTransaction.count != 0) {
+            saveTransaction()
+        } else {
+            self.showMessage(messageString: "Error: ")
+        }  
+        //Get Category
+        getCategory()
+        if (self.categoryList.listCategoryTransactions.count != 0) {
+            saveCategory()
+        } else {
+            self.showMessage(messageString: "Error: ")
+        }
     }
     
     func updatingTableView()
@@ -292,9 +275,8 @@ class MyJsonClass{
             }
         }
     }
-    
+
     func sendingReport(){
-        
         for i in 0...updatingTransactions.listUpdatingResults.count-1{
             if (updatingTransactions.listUpdatingResults[i].checkFlag){
                 postTransaction(SendingUUID: updatingTransactions.listUpdatingResults[i].uuid!)
@@ -339,13 +321,11 @@ class MyJsonClass{
     func saveAccounts()
     {
         try! realm.write {
-            //add Accounts to Realm
             for i in 0...accountList.listAccount.count-1{
                 realm.add(accountList.listAccount[i])
             }
         }
     }
-    
     
     func saveTransaction()
     {
@@ -375,18 +355,12 @@ class MyJsonClass{
         return
     }
     
-    func makeCategoryArray(){
-        allCategory = realm.objects(CategoryTransaction.self)
-    }
-    
-    
     func makeSectionsArray() {
         let spDate:Date = Calendar.current.date(byAdding: .day, value: -15, to: Date())!
         
         let predicate = NSPredicate(format: "madeOn > %@", spDate as CVarArg) //+predicate 15 days
         
         allTransaction = realm.objects(Transaction.self).filter(predicate).sorted(by: ["madeOn", "descriptionOfTransaction"])
-        //allTransaction = realm.objects(Transaction).sorted(by: ["MadeOn"])
     }
     
     func makeExpendedCategories(){
