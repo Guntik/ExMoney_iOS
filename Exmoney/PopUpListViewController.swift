@@ -9,8 +9,8 @@
 import UIKit
 import RealmSwift
 
-protocol TrendingProductsCustomDelegate: class { //Setting up a Custom delegate for this class. I am using `class` here to make it weak.
-    func sendingCategoryToHomePageViewController(categoryToRefresh: CategoryTransaction) //This function will send the data back to origin viewcontroller.
+protocol CategoryToRefreshDelegate: class {
+    func sendingCategoryToHomePageViewController(_ categoryToRefresh: CategoryTransaction) //This function will send the data back to origin viewcontroller.
 }
 
 extension Results {
@@ -21,38 +21,30 @@ extension Results {
                 array.append(result)
             }
         }
-        
         return array
     }
 }
 
 class PopUpListViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
-    //@IBOutlet weak var tableView: UITableView!
-    var mainCategory: Array<CategoryTransaction>!
-    var childrenCategory: Array<CategoryTransaction>!
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var popUpNavigationItem: UINavigationItem!
+    var mainCategory: Array<CategoryTransaction>!
+    var childrenCategory: Array<CategoryTransaction>!
     var category:String = "Uncategorized >"
     var categoryChange: CategoryTransaction!
-    weak var customDelegateForDataReturn: TrendingProductsCustomDelegate?
-    
+    weak var customDelegateForDataReturn: CategoryToRefreshDelegate?
     var categorySearchResults: Array<CategoryTransaction>?
     var arrayOfSpecies:Array<CategoryTransaction>?
     var selectedIndexPathSection:Int = -1
-    
     var sectionNames: [String] {
         return Set(realm.objects(CategoryTransaction.self).filter("parent == 1").sorted(byKeyPath: "name").value(forKeyPath: "name") as! [String]).sorted(by: { $0.compare($1) == .orderedAscending})
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //sectionNames = getParentCategoryTransaction()
-        mainCategory = (getParentCategoryTransaction())!.sorted { $0.name < $1.name } //realm.objects(CategoryTransaction)
+        mainCategory = (getParentCategoryTransaction())!.sorted { $0.name < $1.name }
         self.view.backgroundColor = UIColor.white.withAlphaComponent(0.8)
-        //tableView.tableFooterView = UIView.init(frame: CGRect.zero)
-        //popUpNavigationItem.title = "New Transaction"
         popUpNavigationItem.leftBarButtonItem = UIBarButtonItem(title: "← Close", style: .plain, target: nil, action: #selector(backAction))
         self.automaticallyAdjustsScrollViewInsets =  false
         tableView.tableFooterView = UIView(frame: CGRect.zero)
@@ -81,8 +73,7 @@ class PopUpListViewController: UIViewController {
             self.view.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
             self.view.alpha = 0.0;
         }, completion:{(finished : Bool)  in
-            if (finished)
-            {
+            if (finished) {
                 self.view.removeFromSuperview()
             }
         })
@@ -90,7 +81,6 @@ class PopUpListViewController: UIViewController {
     
     func getParentCategoryTransaction() -> [CategoryTransaction]? {
         let objects = realm.objects(CategoryTransaction.self).filter("parent = true").toArray(ofType: CategoryTransaction.self) as [CategoryTransaction]
-        print(realm.objects(CategoryTransaction.self))
         return objects.count > 0 ? objects : nil
     }
     
@@ -98,21 +88,6 @@ class PopUpListViewController: UIViewController {
         let objects = realm.objects(CategoryTransaction.self).toArray(ofType: CategoryTransaction.self) as [CategoryTransaction]
         return objects.count > 0 ? objects : nil
     }
-    
-    /*func getChildrenCategoryTransaction(arrayOfMainCategory: [CategoryTransaction]){
-        let allCount = realm.objects(CategoryTransaction.self).count
-        for i in 0 ... arrayOfMainCategory.count - 1{
-            let childParent_id = arrayOfMainCategory[i].id
-            print(arrayOfMainCategory[i].name)
-            for j in 0 ... allCount - 1 {
-                childrenCategory = Array<CategoryTransaction>()
-                if ((getAllCategoryTransaction()?[j].parent_id)! == childParent_id){
-                    childrenCategory.append((getAllCategoryTransaction()?[j])!)
-                }
-            }
-            
-        }
-    }*/
     
     func getChildrenCategory(id: Int) -> [CategoryTransaction]{
         let objects = realm.objects(CategoryTransaction.self).filter("parent_id == %@", id).toArray(ofType: CategoryTransaction.self) as [CategoryTransaction]
@@ -133,31 +108,7 @@ class PopUpListViewController: UIViewController {
     
     func backAction(){
         self.removeAnimation()
-        //self.view.removeFromSuperview()
-        //dismiss(animated: true, completion: nil)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    /*func headerCellButtonTapped(sender:UIButton)
-    {
-        if(selectedIndexPathSection == (sender.tag - 100))
-        {
-            selectedIndexPathSection = -1
-        }
-        else   {
-            print("button tag : \(sender.tag)")
-            selectedIndexPathSection = sender.tag - 100
-        }
-        
-        //reload tablview
-        UIView.animate(withDuration: 0.3, delay: 1.0, options: UIViewAnimationOptions.transitionCrossDissolve , animations: {
-            self.tableView.reloadData()
-        }, completion: nil)
-        
-    }*/
 }
 
 //MARK: - UITableViewDelegate
@@ -168,8 +119,7 @@ extension PopUpListViewController: UITableViewDelegate{
         
         let headerView = UIView(frame: CGRect(x:0, y:0, width:tableViewWidth.size.width, height:self.tableView.sectionHeaderHeight))
         headerView.backgroundColor = UIColor(red: 255/155, green: 198/255, blue: 67/255, alpha: 1)
-        
-        var label = UILabel(frame: CGRect(x:10, y: 0, width: tableViewWidth.size.width, height:30))
+        let label = UILabel(frame: CGRect(x:10, y: 0, width: tableViewWidth.size.width, height:30))
         label.text = self.sectionNames[section]
         headerView.addSubview(label)
         
@@ -190,9 +140,8 @@ extension PopUpListViewController: UITableViewDelegate{
             categoryChange = arrayOfSpecies?[indexPath!.row]
             category = categoryChange.name
         }
-        
         if categoryChange != nil {
-        customDelegateForDataReturn?.sendingCategoryToHomePageViewController(categoryToRefresh: categoryChange)
+            customDelegateForDataReturn?.sendingCategoryToHomePageViewController(categoryChange)
         }
         //performSegue(withIdentifier: "popUpSegue", sender: category)
         let myVC = storyboard?.instantiateViewController(withIdentifier: "AddNewTransactionView") as! AddNewTransactionViewController
@@ -216,7 +165,6 @@ extension PopUpListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = self.tableView!.dequeueReusableCell(withIdentifier: "categoryCell") as! UITableViewCell
         //let cell = tableView.dequeueReusableCell(withIdentifier: "categoryTableViewCell", for: indexPath) as! CategoryTableViewCell
         if tableView == self.searchDisplayController!.searchResultsTableView {

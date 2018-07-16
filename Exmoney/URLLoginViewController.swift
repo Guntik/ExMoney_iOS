@@ -15,7 +15,7 @@ class URLLoginViewController: UIViewController {
     @IBOutlet weak var URLTextField: UITextField!
     
     //var flagToken:Bool = false
-    var tokenKey:String = ""
+    var tokenKey = ""
     
     @IBAction func urlEditingChanged(_ sender: Any) {
         //Make LoginButton enable
@@ -56,20 +56,11 @@ class URLLoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // for me
-        // self.URLTextField.text =
         self.EmailTextField.delegate = self
         self.passwordTextField.delegate = self
         self.URLTextField.delegate = self
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -99,53 +90,41 @@ class URLLoginViewController: UIViewController {
             }
         }
     }
-    var flagAccount:Bool = false
+    var flagAccount = false
     
     func postToken(url: String, email: String, password: String)
     {
         DispatchQueue.global(qos: .userInitiated).async { }
         let urlPost = url + "/api/v2/login"
         let myUrl=URL(string:urlPost)
-        
         userDefaults.set(url, forKey: "URLKey")
-        
         //async
         let semaphore = DispatchSemaphore(value: 0)
-        
         let postString = "email=\(email)&password=\(password)"
-        
         var request = URLRequest(url:myUrl!)
-        
         request.httpMethod = "POST"
-        
         request.httpBody=postString.data(using: String.Encoding.utf8)
-        
         let task = URLSession.shared.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
-            
-            
-            if error != nil
-            {
+
+            if error != nil {
                 let messagePost:String = "It's somthing wrong: error " + error.debugDescription
                 let alert = UIAlertController(title: "Alert", message: messagePost, preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
                 return
             }
-            
             //Convert response
             do {
                let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
                 
                 if let parseJSON = json {
-                    
                     let jwtValue = parseJSON["jwt"] as? String
                     if (jwtValue != nil){
                         //save token
                         self.tokenKey = jwtValue!
                         userDefaults.set(jwtValue, forKey: "TokenKey")
-                        //seve flag -> next time use only password and name
+                        //save flag -> next time use only password and name
                         userDefaults.set(true, forKey:"flagToken")
-                        // set flag to show tableView
                     }
                 }
             } catch {
@@ -160,8 +139,7 @@ class URLLoginViewController: UIViewController {
         task.resume()
         semaphore.wait(timeout: .distantFuture)
         
-        if (tokenKey == "")//(userDefaults.string(forKey: "TokenKey") == nil)
-        {
+        if (tokenKey == ""){
             let messageConvert:String = "Pass or Email is incorrect"
             let alert = UIAlertController(title: "Alert", message: messageConvert, preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
@@ -170,12 +148,10 @@ class URLLoginViewController: UIViewController {
         } else {
             self.flagAccount = true
         }
-        //return
     }
-
-    var url:String = ""
-    var email:String = ""
-    var password:String = ""
+    var url = ""
+    var email = ""
+    var password = ""
 }
 
 //MARK: - UITextFieldDelegate

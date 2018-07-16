@@ -10,35 +10,31 @@ import UIKit
 import RealmSwift
 
 
-class Account:Object {
-    
-    dynamic var balance_millicents: Int = 0
-    dynamic var currencyCode: String = ""
-    dynamic var name: String = ""
-    dynamic var isAccountShow: Bool = false
-    dynamic var isSaltedgeAccountIdShow: Bool = false
-    dynamic var id_acc: Int = 0
+class Account: Object {
+    dynamic var balance_millicents = 0
+    dynamic var currencyCode = ""
+    dynamic var name = ""
+    dynamic var isAccountShow = false
+    dynamic var isSaltedgeAccountIdShow = false
+    dynamic var id_acc = 0
     
     override static func primaryKey() -> String? {
         return "id_acc"
     }
-    
     convenience required init(jsonArray: [String : AnyObject]) {
-        
         self.init()
-        
         name = (jsonArray["name"] as? String)!
         balance_millicents = (jsonArray["balance_millicents"] as? Int)!
         currencyCode = (jsonArray["currency_code"] as? String)!
         id_acc = (jsonArray["id"] as? Int)!
         
-        if let showOnDashboardValue = jsonArray["show_on_dashboard"] as? Bool {
+        if (jsonArray["show_on_dashboard"] as? Bool) != nil {
              isAccountShow = true
         } else {
             isAccountShow = false 
         }
         
-       if let saltage = jsonArray["saltedge_account_id"] as? Int {
+        if (jsonArray["saltedge_account_id"] as? Int) != nil {
             isSaltedgeAccountIdShow = true
         } else {
             isSaltedgeAccountIdShow = false
@@ -46,33 +42,28 @@ class Account:Object {
     }
 }
 
-class AccountsList:Object {
+class AccountsList: Object {
     let listAccount = List<Account>()
 }
 
-
-class Transaction: Object{
-
+class Transaction: Object {
     dynamic var madeOn: Date?
     dynamic var descriptionOfTransaction: String?
-    dynamic var amount_millicents: Int = 0
+    dynamic var amount_millicents = 0
     dynamic var currencyCode: String?
     dynamic var category: CategoryTransaction? = nil
     dynamic var information: String?
-    dynamic var id: Int = 0
+    dynamic var id = 0
     dynamic var payee: String?
-    dynamic var account_id: Int = 0
+    dynamic var account_id = 0
     
     override static func primaryKey() -> String? {
         return "id"
     }
     let dateFormatt = DateFormatter()
     
-    
     convenience required init(jsonArray: [String : AnyObject] ) {
-        
         self.init()
-        
         dateFormatt.dateFormat = "yyyy-MM-dd"
         amount_millicents = (jsonArray["amount_millicents"] as? Int)!
         account_id = (jsonArray["account_id"] as? Int)!
@@ -107,16 +98,14 @@ class Transaction: Object{
     }
 }
 
-class CategoryTransaction:Object{
-    dynamic var id: Int = 0
-    dynamic var name: String = ""
-    dynamic var parent_id: Int = 0
-    dynamic var parent: Bool = false
-    
+class CategoryTransaction: Object {
+    dynamic var id = 0
+    dynamic var name = ""
+    dynamic var parent_id = 0
+    dynamic var parent = false
     override static func primaryKey() -> String? {
         return "id"
     }
-    
     convenience required init(jsonArray: [String : AnyObject] ) {
         self.init()
         id = (jsonArray["id"] as? Int)!
@@ -132,16 +121,14 @@ class CategoryTransaction:Object{
     }
 }
 
-class UpdatingTransaction: Object{
-    
-    dynamic var id: Int = 1
+class UpdatingTransaction: Object {
+    dynamic var id = 1
     dynamic var uuid: String?
     dynamic var actionClass: myActionClass?
     dynamic var entity: String?
     dynamic var insertedAtDate: Date?
     dynamic var payload: Transaction? = nil
-    dynamic var checkFlag: Bool = false
-    
+    dynamic var checkFlag = false
     override static func primaryKey() -> String? {
         return "uuid"
     }
@@ -150,7 +137,6 @@ class UpdatingTransaction: Object{
     
     convenience required init(jsonArray: [String : AnyObject] ) {
         self.init()
-        
         dateFormatt.dateFormat = "yyyy-MM-dd"
         uuid = (jsonArray["uuid"] as? String)
         entity = (jsonArray["entity"] as! String)
@@ -159,10 +145,7 @@ class UpdatingTransaction: Object{
         actionClass?.action = (jsonArray["action"] as! String)
         
         let payloadTransaction = jsonArray["payload"] as! [String:Any]
-        
         insertedAtDate = dateFormatt_aqur.date(from: (payloadTransaction["inserted_at"] as? String)!)
-        
-        
         payload = Transaction()
         payload?.madeOn = dateFormatt.date(from: (payloadTransaction["made_on"] as? String)!)
         payload?.account_id = (payloadTransaction["account_id"] as? Int)!
@@ -195,12 +178,12 @@ class UpdatingTransaction: Object{
     }
 }
 
-class SectionList: Object{
+class SectionList: Object {
    let sections = List<Section>()
 }
 
 class Section: Object {
-    let heading : String = ""
+    let heading = ""
     let listTransaction = List<Transaction>()
 }
 
@@ -216,25 +199,8 @@ class UpdatingTransactionList: Object {
     let listUpdatingResults = List<UpdatingTransaction>()
 }
 
-/*class LogInfo:Object{
-    
-    dynamic var id = 0
-    dynamic var Transaction = ""
-    dynamic var status:Bool = false
-    dynamic var time: NSDate? = nil
-    override static func primaryKey() -> String? {
-        return "id"
-    }
-}
-
-class LogInfoList:Object {
-    let ListLogInfo = List<LogInfo>()
-}*/
-
 enum Action: String {
-    case delete
-    case update
-    case create
+    case delete, update, create
 }
 
 class myActionClass: Object {
@@ -255,24 +221,6 @@ struct CellData {
     var text2:Any!
 }
 
-
-/*class MainCategoryHeaderTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var categoryLabel: UILabel!
-    @IBOutlet weak var expandCollapseImageView: UIImageViewdescriptiontlet weak var headerCellButton: UIButton!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-    }    
-}
-*/
-
 class CategoryTableViewCell: UITableViewCell {
     
     @IBOutlet weak var categoryListContainerView: UIView!
@@ -280,11 +228,8 @@ class CategoryTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         categoryListContainerView.layer.cornerRadius =  3.0
-
     }
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
@@ -292,16 +237,12 @@ class CategoryTableViewCell: UITableViewCell {
 }
     
     class DatePickerTableViewCell: UITableViewCell {
-        
         var datePicker: UIDatePicker!
-        
         required init(coder aDecoder: NSCoder) {
             fatalError("init(coder:)")
         }
-        
         override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
-            
             let gapX : CGFloat = 0
             let gapY :CGFloat = 0
             let labelHeight: CGFloat = 200
@@ -310,7 +251,6 @@ class CategoryTableViewCell: UITableViewCell {
             datePicker.frame = CGRect(x: gapX, y: gapY, width: frame.width, height: labelHeight)
             contentView.addSubview(datePicker)
         }
-        
     }
 
 

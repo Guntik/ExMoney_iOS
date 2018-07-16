@@ -11,7 +11,7 @@ import RealmSwift
 import DatePickerCell
 
 protocol addingTransactionDelegate: class {
-    func addingDelegate(addTransaction: Transaction) //This function send the data back to origin ViewController.
+    func addingDelegate(_ addTransaction: Transaction) //This function send the data back to origin ViewController.
 }
 
 // convert string with "." and "," to float value
@@ -21,7 +21,6 @@ extension String {
         converter.decimalSeparator = ","
         if let result = converter.number(from: self) {
             return result.floatValue
-            
         } else {
             converter.decimalSeparator = "."
             if let result = converter.number(from: self) {
@@ -44,16 +43,15 @@ class AddNewTransactionViewController: UIViewController {
 
     var popUpList = PopUpListViewController()
     var newTransaction = Transaction()
-    var flagIncome:Bool = false
-    let titelNames:[String] = ["Account", "Category", "Date"]
-    var valueNames:[String] = ["Cash >", "Uncategorized >", ""]
+    var flagIncome = false
+    let titelNames = ["Account", "Category", "Date"]
+    var valueNames  = ["Cash >", "Uncategorized >", ""]
     
     var dateFormatterRow = DateFormatter()
-    var accountArray : Results<Account>!
     var category:String!
     let date = Date()
     var strDate:String!
-    let datePickerView:UIDatePicker = UIDatePicker()
+    let datePickerView = UIDatePicker()
     let toolBar = UIToolbar()
     var datePickerIndexPath: IndexPath?
     var cells:NSArray = []
@@ -79,16 +77,18 @@ class AddNewTransactionViewController: UIViewController {
         navigationBarItem.title = "New Transaction"
         navigationBarItem.leftBarButtonItem = UIBarButtonItem(title: "← Back", style: .plain, target: self, action: #selector(backAction))
         
-        //tableView.register(TextFiledTableViewCell.self, forCellReuseIdentifier: "textCell")
         tableView.register(DatePickerTableViewCell.self, forCellReuseIdentifier: "datePickerCell")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        //tableView.estimatedRowHeight = 300
         addButtonToFooter()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(sender:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(sender:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
+    
+    /*override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }*/
 
     func keyboardWillShow(sender: NSNotification) {
         self.view.frame.origin.y = -150 // Move view 150 points upward
@@ -98,7 +98,6 @@ class AddNewTransactionViewController: UIViewController {
         self.view.frame.origin.y = 0 // Move view to original position
     }
 
-    
     func addButtonToFooter(){
         let footer = UIView(frame: CGRect(x: 0, y: 0, width: Int(tableView.frame.width), height: 90))
         tableView.tableFooterView = footer
@@ -114,39 +113,34 @@ class AddNewTransactionViewController: UIViewController {
         footer.addSubview(addButton)
         addButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
     }
-
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     @IBAction func segmentValueChenged(_ sender: Any) {
         if seqmentControl.selectedSegmentIndex == 1 {
             flagIncome = true
-            //newTransaction.Amount_millicents = newTransaction.Amount_millicents * -1
         }
     }
     
     func addButtonPressed(_ sender: UIButton){
-        
-        let cell = Bundle.main.loadNibNamed("TextFieldTableViewCell", owner: self, options: nil)?.first as! TextFieldTableViewCell
-        //let cell:TextFiledTableViewCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! TextFiledTableViewCell
-        if cell.TextFieldCell.text != "0" {
-            
-            newTransaction.amount_millicents = -1 * stringToAmountMillicent(stringAmount: cell.TextFieldCell.text!)
-            
-            if (flagIncome) {
-                newTransaction.amount_millicents = newTransaction.amount_millicents * -1
+        let amountString = (tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! TextFieldTableViewCell).TextFieldCell.text
+        if amountString != "0" {
+            if (amountString?.first != "0") {
+            newTransaction.amount_millicents = -1 * stringToAmountMillicent(stringAmount: (tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! TextFieldTableViewCell).TextFieldCell.text!)
+                if (flagIncome) {
+                    newTransaction.amount_millicents = newTransaction.amount_millicents * -1
+                }
+            } else {
+                let messagePost:String = "The amount of new transaction is incorrect"
+                let alert = UIAlertController(title: "Alert", message: messagePost, preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
             }
             newTransaction.descriptionOfTransaction = (tableView.cellForRow(at: IndexPath(row: 4, section: 0)) as! TextFieldTableViewCell).TextFieldCell.text
             newTransaction.madeOn = dateFormatterRow.date(from: ((tableView.cellForRow(at: IndexPath(row: 3, section: 0)) as! UITableViewCell).detailTextLabel?.text!)!)
-            
-            delegateTransaction?.addingDelegate(addTransaction: newTransaction)
-            
+            delegateTransaction?.addingDelegate(newTransaction)
             self.dismiss(animated: true, completion: nil)
         } else {
-            let messagePost:String = "Some fields have no value. Please check it"
+            let messagePost:String = "Some fields have no value. Please, check it"
             let alert = UIAlertController(title: "Alert", message: messagePost, preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -199,38 +193,18 @@ class AddNewTransactionViewController: UIViewController {
         return amountMillicent
     }
     
-    func makeArrayOfAccounts() { // make list of Accounts
-        print(realm.objects(Account))
-        accountArray = realm.objects(Account).filter("isSaltedgeAccountIdShow = 0")
+    func makeArrayOfAccounts() -> Results<Account> { // make list of Accounts
+        return realm.objects(Account.self).filter("isSaltedgeAccountIdShow = 0")
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
 
 //MARK: - UITableViewDataSource
 extension AddNewTransactionViewController: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (datePickerIndexPath != nil) {
             return 6
         } else {
             return 5
-            
         }
     }
     
@@ -273,7 +247,6 @@ extension AddNewTransactionViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var rowHeight = tableView.rowHeight
         if datePickerIndexPath != nil && datePickerIndexPath!.row == indexPath.row {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "datePickerCell")!
             rowHeight = 200
         }
         return rowHeight
@@ -282,16 +255,16 @@ extension AddNewTransactionViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath.row == 1) {
             self.view.endEditing(true)
-            makeArrayOfAccounts()
+            let accountArray = makeArrayOfAccounts()
             let alert = UIAlertController(title: "Account", message: "Please Choose Account", preferredStyle: .actionSheet)
             for index in 0...accountArray.count-1 {
                 alert.addAction(UIAlertAction(title: accountArray[index].name, style: .default, handler: { (action) in
-                    self.valueNames[0] = self.accountArray[index].name
+                    self.valueNames[0] = accountArray[index].name
                     let indexPath = IndexPath(row: 1, section:0)
                     tableView.beginUpdates()
                     tableView.reloadRows(at: [indexPath], with: .top)
                     tableView.endUpdates()
-                    self.newTransaction.account_id = self.accountArray[index].id_acc
+                    self.newTransaction.account_id = accountArray[index].id_acc
                 }))
             }
             self.present(alert, animated: true, completion: {
@@ -300,8 +273,6 @@ extension AddNewTransactionViewController: UITableViewDelegate {
         
         if (indexPath.row == 2) {
             popUpList = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "popUpListID") as! PopUpListViewController
-            
-            //self.present(popUpList, animated: true, completion: nil)
             self.view.endEditing(true)
             popUpList.customDelegateForDataReturn = self
             self.addChildViewController(popUpList)
@@ -328,8 +299,8 @@ extension AddNewTransactionViewController: UITableViewDelegate {
 }
 
 //MARK: - TrendingProductsCustomDelegate
-extension AddNewTransactionViewController: TrendingProductsCustomDelegate {
-    func sendingCategoryToHomePageViewController(categoryToRefresh: CategoryTransaction) { //Custom delegate function which was defined inside child class to get the data and do the other stuffs.
+extension AddNewTransactionViewController: CategoryToRefreshDelegate {
+    func sendingCategoryToHomePageViewController(_ categoryToRefresh: CategoryTransaction) { //
         newTransaction.category = categoryToRefresh
         valueNames[1] = categoryToRefresh.name
         let indexPath = IndexPath(row: 2, section:0)

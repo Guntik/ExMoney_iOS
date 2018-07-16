@@ -86,11 +86,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Exmoney/JsonArrays.swift"
-            timestampString = "552913514.86256"
+            timestampString = "553094411.664212"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "315"
-            endingLineNumber = "315"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
             landmarkName = "updatingTransactiontFromServer()"
             landmarkType = "7">
          </BreakpointContent>

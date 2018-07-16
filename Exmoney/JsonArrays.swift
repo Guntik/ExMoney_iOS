@@ -10,15 +10,10 @@ import Foundation
 import RealmSwift
 
 
-class MyJsonClass{
-    
-    var accountList = AccountsList()
-    var transactions = TransactionsList()
-    var categoryList = CategoryTransactionList()
+class MyJsonClass {
     var updatingTransactions = UpdatingTransactionList()
-    
     var allAccounts : Results<Account>!
-    var allTransaction : Results<Transaction>!
+    var allTransactions : Results<Transaction>!
     var allCategory : Results<CategoryTransaction>!
     
     func setRequest(urlAddition: String) -> URLRequest {
@@ -38,10 +33,10 @@ class MyJsonClass{
     func showMessage(messageString: String){
         let alert = UIAlertController(title: "Alert", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-       // self.present(alert, animated: true, completion: nil)
     }
     
-    func getAccount(){
+    func getAccount() -> AccountsList {
+        let list = AccountsList()
         let request = self.setRequest(urlAddition: "/api/v2/accounts")
         let semaphore = DispatchSemaphore(value: 0)
         URLSession.shared.dataTask(with: request){
@@ -57,7 +52,7 @@ class MyJsonClass{
                 parseResult = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray
                 for index in 0...parseResult.count-1{
                     let account = Account(jsonArray: parseResult[index] as! [String : AnyObject])
-                    self.accountList.listAccount.append(account)
+                    list.listAccount.append(account)
                 }
             } catch {
                 self.showMessage(messageString: "Could not parse data as Json")
@@ -66,9 +61,11 @@ class MyJsonClass{
             semaphore.signal()
             }.resume()
         semaphore.wait(timeout: .distantFuture)
+        return list
     }
     
-    func getTransactions(){
+    func getTransactions() -> TransactionsList {
+        let list = TransactionsList()
         let request = setRequest(urlAddition: "/api/v2/transactions/recent")
         let semaphore = DispatchSemaphore(value: 0)
         //http get
@@ -86,9 +83,8 @@ class MyJsonClass{
                 //parsing json and make an array of transactions
                 for index in 0...parseResult.count-1{
                     let transaction = Transaction(jsonArray: parseResult[index] as! [String : AnyObject])
-                    self.transactions.listTransaction.append(transaction)
+                    list.listTransaction.append(transaction)
                 }
-               // print(transactions)
             } catch {
                 self.showMessage(messageString: "Could not parse data as Json")
                 return
@@ -96,9 +92,11 @@ class MyJsonClass{
             semaphore.signal()
             }.resume()
         semaphore.wait(timeout: .distantFuture)
+    return list
     }
     
-    func getCategory(){
+    func getCategory() -> CategoryTransactionList {
+        let list = CategoryTransactionList()
         let request = setRequest(urlAddition: "/api/v2/categories")
         let semaphore = DispatchSemaphore(value: 0)
         URLSession.shared.dataTask(with: request){
@@ -113,7 +111,7 @@ class MyJsonClass{
                 //parsing json and make an array of categories
                 for index in 0...categoryResult.count-1 {
                     let category = CategoryTransaction(jsonArray: categoryResult[index] as! [String : AnyObject])
-                    self.categoryList.listCategoryTransactions.append(category)
+                    list.listCategoryTransactions.append(category)
                 }
             } catch {
                 self.showMessage(messageString: "Could not parse data as Json")
@@ -122,11 +120,11 @@ class MyJsonClass{
             semaphore.signal()
             }.resume()
         semaphore.wait(timeout: .distantFuture)
+        return list
     }
     
     // Sending Transaction
-    func postTransaction(SendingUUID:String){
-        
+    func postTransaction(SendingUUID: String){
         let url = userDefaults.string(forKey: "URLKey")
         let token = userDefaults.string(forKey: "TokenKey")
         //Method Post
@@ -134,12 +132,9 @@ class MyJsonClass{
         let myUrl=URL(string:urlPost)
         
         //async
-        //let semaphore = DispatchSemaphore(value: 0)
-        
+        let semaphore = DispatchSemaphore(value: 0)
         var request = URLRequest(url:myUrl!)
-        
         let jsonDict = ["uuid": SendingUUID] as [String: Any]
-        
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: jsonDict, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
         } catch let error {
@@ -151,23 +146,6 @@ class MyJsonClass{
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("Token \(token!)", forHTTPHeaderField: "Authorization")
         
-        //let parameters = ["uuid": SendingUUID] as [String: String]
-        //request.httpBody = jsonData as! Data
-        //do {
-        //request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
-        
-        //} catch let error {
-        // print(error.localizedDescription)
-        //}
-        
-        
-        //let task = URLSession.shared.dataTask(with: request) {
-        //(data: Data?, response: URLResponse?, error: Error?) in
-        // guard error == nil && data != nil else {
-        //    print("error=\(error)")
-        //    return
-        // }
-        
         //Convert response
         let task = URLSession.shared.dataTask(with: request as URLRequest){ data,response,error in
             if error != nil{
@@ -178,55 +156,29 @@ class MyJsonClass{
                 
             } catch {
             }
+             semaphore.signal()
         }
-        /*do {
-         let responseJSON = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? [String:AnyObject]
-         print(responseJSON)
-         let responseStatus = responseJSON?["status"] as? Int
-         
-         print(responseStatus)
-         
-         //Check response from the sever
-         if responseStatus! == 200
-         {
-         //OperationQueue.main.addOperation {
-         realm.delete(self.updatingTransactions.ListUpdatingResults.filter("uuid == %@", SendingUUID))
-         //API call Successful and can perform other operations
-         print("Transaction send successfully")
-         //}
-         }
-         else
-         {
-         print("Sending Failed")
-         }
-         
-         } catch {
-         self.showMessage(messageString: "Try it again")
-         return
-         }
-         //semaphore.signal()
-         }*/
         task.resume()
-        //semaphore.wait(timeout: .distantFuture)
+        semaphore.wait(timeout: .distantFuture)
     }
     
     func makeListOfFailedTransactions() -> Results<UpdatingTransaction>
     {
-        var FailedUpdatingTransactions = realm.objects(UpdatingTransaction).filter("checkFlag == false")
+        let FailedUpdatingTransactions = realm.objects(UpdatingTransaction.self).filter("checkFlag == false")
         return FailedUpdatingTransactions
     }
     
     func loadAllDataFromRealm()
     {
         allAccounts = realm.objects(Account.self)
-        allTransaction = realm.objects(Transaction.self)
+        allTransactions = realm.objects(Transaction.self)
         allCategory = realm.objects(CategoryTransaction.self)
-        if (allAccounts.count == 0 || allTransaction.count == 0 || allCategory.count == 0) {
+        if (allAccounts.count == 0 || allTransactions.count == 0 || allCategory.count == 0) {
             initiateAllArrays()
         }
         //Make an array with dashboard = true
-        makeArray()
-        makeSectionsArray()
+        allAccounts = performingAccountsArray()
+        allTransactions = performingTransactionsArray()
     }
     
     func initiateAllArrays(){
@@ -234,23 +186,23 @@ class MyJsonClass{
             realm.deleteAll()
         }
         //Getting accounts and saving them to Realm
-        getAccount()
-        if (self.accountList.listAccount.count != 0) {
-            saveAccounts()
+        let accountList = getAccount()
+        if (accountList.listAccount.count != 0) {
+            saveAccounts(list: accountList)
         } else {
             self.showMessage(messageString: "Error: ")
         }
         //Get Transactions
-        getTransactions()
-        if (self.transactions.listTransaction.count != 0) {
-            saveTransaction()
+        let transactionList = getTransactions()
+        if (transactionList.listTransaction.count != 0) {
+            saveTransaction(list:transactionList)
         } else {
             self.showMessage(messageString: "Error: ")
         }  
         //Get Category
-        getCategory()
-        if (self.categoryList.listCategoryTransactions.count != 0) {
-            saveCategory()
+        let categoryList = getCategory()
+        if (categoryList.listCategoryTransactions.count != 0) {
+            saveCategory(list: categoryList)
         } else {
             self.showMessage(messageString: "Error: ")
         }
@@ -295,7 +247,6 @@ class MyJsonClass{
                 self.showMessage(messageString: "Error: " + error.debugDescription)
                 return
             }
-            
             let updatingResult: NSArray
             do {
                 updatingResult = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray
@@ -313,54 +264,54 @@ class MyJsonClass{
             }
             semaphore.signal()
             }.resume()
-        
         semaphore.wait(timeout: .distantFuture)
         return countOfUpdatetedTransactionsFlag
     }
     
-    func saveAccounts()
+    func saveAccounts(list: AccountsList)
     {
         try! realm.write {
-            for i in 0...accountList.listAccount.count-1{
-                realm.add(accountList.listAccount[i])
+            for i in 0...list.listAccount.count-1{
+                realm.add(list.listAccount[i])
             }
         }
     }
     
-    func saveTransaction()
+    func saveTransaction(list: TransactionsList)
     {
         try! realm.write {
-            for i in 0...transactions.listTransaction.count-1{
-                if (transactions.listTransaction[i].currencyCode == "")
+            for i in 0...list.listTransaction.count-1{
+                if (list.listTransaction[i].currencyCode == "")
                 {
-                    let account = realm.object(ofType: Account.self, forPrimaryKey: transactions.listTransaction[i].account_id)
-                    transactions.listTransaction[i].currencyCode = account?.currencyCode
+                    let account = realm.object(ofType: Account.self, forPrimaryKey: list.listTransaction[i].account_id)
+                    list.listTransaction[i].currencyCode = account?.currencyCode
                 }
-                realm.add(transactions.listTransaction[i], update:true)
+                realm.add(list.listTransaction[i], update:true)
             }
         }
     }
     
-    func saveCategory(){
+    func saveCategory(list: CategoryTransactionList){
         try! realm.write {
-            for i in 0...categoryList.listCategoryTransactions.count-1{
-                realm.add(categoryList.listCategoryTransactions[i], update:true)
+            for i in 0...list.listCategoryTransactions.count-1{
+                realm.add(list.listCategoryTransactions[i], update:true)
             }
         }
     }
     
-    func makeArray(){
+    func performingAccountsArray() -> Results<Account> {
+        let sortedAccounts: Results<Account>
         let predicate = NSPredicate(format: "isAccountShow == 1")
-        allAccounts = realm.objects(Account.self).filter(predicate)
-        return
+        sortedAccounts = realm.objects(Account.self).filter(predicate)
+        return sortedAccounts
     }
     
-    func makeSectionsArray() {
+    func performingTransactionsArray() -> Results<Transaction> {
+        let sortedTransactions: Results<Transaction>
         let spDate:Date = Calendar.current.date(byAdding: .day, value: -15, to: Date())!
-        
         let predicate = NSPredicate(format: "madeOn > %@", spDate as CVarArg) //+predicate 15 days
-        
-        allTransaction = realm.objects(Transaction.self).filter(predicate).sorted(by: ["madeOn", "descriptionOfTransaction"])
+        sortedTransactions = realm.objects(Transaction.self).filter(predicate).sorted(by: ["madeOn", "descriptionOfTransaction"])
+        return sortedTransactions
     }
     
     func makeExpendedCategories(){

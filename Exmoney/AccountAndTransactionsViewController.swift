@@ -21,24 +21,22 @@ class AccountAndTransactionsViewController: UIViewController {
 
     var tableViewAccounts: UITableView!
     let floaty = Floaty()
-    
     var myJson = MyJsonClass()
-    
-    //let userDefaults = Foundation.UserDefaults.standard
     var isEditingMode = false
     
-    var editRow:Int = 0
-    var editSection:Int = 0
+    var editRow = 0
+    var editSection = 0
     
     // for sections in TableView
     var sectionNames: [Date] {
-        return Set(myJson.allTransaction.value(forKeyPath: "madeOn") as! [Date]).sorted(by: { $0.compare($1) == .orderedDescending})}
+        return Set(myJson.allTransactions.value(forKeyPath: "madeOn") as! [Date]).sorted(by: { $0.compare($1) == .orderedDescending})
+    }
     
     var editCategory:String!
     var editNote:String!
     var editTransaction:Transaction!
     
-    var delegate: writeValueBackDelegate?
+    var delegate: editedTransactionDelegate?
     
     let screenHeight = UIScreen.main.bounds.height
     let lableHeight = 30
@@ -47,7 +45,7 @@ class AccountAndTransactionsViewController: UIViewController {
     var flagConnectionChanged = false
     
     var reachability = Reachability()!
-    var dateFormatt:DateFormatter = DateFormatter()
+    var dateFormatt = DateFormatter()
     
     let refreshControl = UIRefreshControl()
     
@@ -62,7 +60,6 @@ class AccountAndTransactionsViewController: UIViewController {
         createFloatButton()
         setReachability()
         myJson.loadAllDataFromRealm()
-        //makeExpendedCategories()
         
         tableViewTransactions.estimatedSectionHeaderHeight = 40
         self.automaticallyAdjustsScrollViewInsets = false
@@ -93,8 +90,6 @@ class AccountAndTransactionsViewController: UIViewController {
     func startActionTimer(){
         processIndicator.startAnimating()
         if (myJson.updatingTransactiontFromServer()) {
-            //sorted list
-            //updatingTransactions.ListUpdatingResults.sorted(byKeyPath: "insertedAtDate", ascending: false)
             myJson.updatingTableView()
             myJson.sendingReport()
             self.tableViewTransactions.reloadData()
@@ -117,9 +112,7 @@ class AccountAndTransactionsViewController: UIViewController {
         
         let rowHeightAccountsTableView = 30 // height of row in TableView
         let gapY = 30 //shift
-        
         height = myJson.allAccounts.count * rowHeightAccountsTableView + 2 * lableHeight + 2 * gapY
-        
         return height
     }
     
@@ -185,15 +178,6 @@ class AccountAndTransactionsViewController: UIViewController {
         }
     }
     
-    //Sending failed Transaction
-    //func sendTransactionToDashboard() {
-        //let notSendedTransaction = realm.objects(LogInfo.self).filter("status = 'false'")
-        //notSendedTransaction.sorted(byKeyPath: "time")
-        //print(notSendedTransaction)
-       // return
-    //}
-
-    
     func includingTableViewInHeader(view: UIView, tableView: UITableView)
     {
         tableView.dataSource = self
@@ -224,21 +208,11 @@ class AccountAndTransactionsViewController: UIViewController {
     
     func handleRefresh(refreshControl: UIRefreshControl) {
         if (myJson.updatingTransactiontFromServer()) {
-            //sorted list
-            //updatingTransactions.ListUpdatingResults.sorted(byKeyPath: "insertedAtDate", ascending: false)
             myJson.updatingTableView()
             myJson.sendingReport()
             self.tableViewTransactions.reloadData()
         }
         refreshControl.endRefreshing()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //preparing for ShowTransactionViewControllSegue
-        if (segue.identifier == "showSegue") {
-            let showViewController = segue.destination as! ShowTransactionViewController
-            //showViewController
-        }
     }
     
     //get currency symbol from currency code
@@ -292,7 +266,7 @@ extension AccountAndTransactionsViewController: UITableViewDataSource {
             count = myJson.allAccounts.count
         }
         if tableView == self.tableViewTransactions {
-            count = myJson.allTransaction.filter("madeOn == %@", sectionNames[section]).count
+            count = myJson.allTransactions.filter("madeOn == %@", sectionNames[section]).count
         }
         return count!
     }
@@ -300,24 +274,20 @@ extension AccountAndTransactionsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == self.tableViewTransactions {
             let cell = Bundle.main.loadNibNamed("TransactionTableViewCell", owner: self, options: nil)?.first as! TransactionTableViewCell
-            //let cell = TransactionCell(style: UITableViewCellStyle.default, reuseIdentifier: "CellID")
-            if let code1 = myJson.allTransaction.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].currencyCode {
-                cell.AmountLbl.text = amountToString(amount_millic: myJson.allTransaction.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].amount_millicents) + " " + getSymbolForCurrencyCode(currencyCode: myJson.allTransaction.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].currencyCode!)!
+            if myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].currencyCode != nil {
+                cell.AmountLbl.text = amountToString(amount_millic: myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].amount_millicents) + " " + getSymbolForCurrencyCode(currencyCode: myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].currencyCode!)!
                 
             } else {
-                cell.AmountLbl.text = amountToString(amount_millic: myJson.allTransaction.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].amount_millicents)
-                //cell.Amount.text = amountToString(amount_millic: allTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].Amount_millicents)*/
+                cell.AmountLbl.text = amountToString(amount_millic: myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].amount_millicents)
             }
             
-            cell.CategoryLbl.text = myJson.allTransaction.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].category?.name
-            //cell.Category.text = allTransaction.filter("MadeOn == %@", sectionNames[indexPath.section])[indexPath.row].Category?.name
+            cell.CategoryLbl.text = myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].category?.name
             
-            if (myJson.allTransaction.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].payee != nil){
-                cell.DescriptionLbl.text = self.myJson.allTransaction.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row].payee!
+            if (myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].payee != nil){
+                cell.DescriptionLbl.text = self.myJson.allTransactions.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row].payee!
                 
             } else {
                 cell.DescriptionLbl.text = "Cash"
-                //cell.Description?.text = "Cash"
             }
             return cell
         } else {
@@ -356,7 +326,7 @@ extension AccountAndTransactionsViewController: UITableViewDelegate {
         if (tableView == tableViewTransactions) {
             let show = UITableViewRowAction(style: .destructive, title: "Show") { (action, indexPath) in
                 let showViewController = self.storyboard?.instantiateViewController(withIdentifier: "ShowTransactionView") as! ShowTransactionViewController
-                showViewController.showTransaction = self.myJson.allTransaction.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row]
+                showViewController.showTransaction = self.myJson.allTransactions.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row]
                 
                 self.navigationController?.pushViewController(showViewController, animated:true )
                 self.present(showViewController, animated: true, completion: nil)
@@ -365,10 +335,10 @@ extension AccountAndTransactionsViewController: UITableViewDelegate {
             let edit = UITableViewRowAction(style: .default, title: "Edit") { (action, indexPath) in
                 let editViewController = self.storyboard?.instantiateViewController(withIdentifier: "EditViewController") as! EditViewController
                 editViewController.delegate = self
-                self.editTransaction = self.myJson.allTransaction.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row]
-                editViewController.categoryToUpdate = (self.myJson.allTransaction.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row]).category!
-                editViewController.noteToUpdate = (self.myJson.allTransaction.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row]).descriptionOfTransaction!
-                editViewController.labelInformation = (self.myJson.allTransaction.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row]).payee!
+                self.editTransaction = self.myJson.allTransactions.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row]
+                editViewController.categoryToUpdate = (self.myJson.allTransactions.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row]).category!
+                editViewController.noteToUpdate = (self.myJson.allTransactions.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row]).descriptionOfTransaction!
+                editViewController.labelInformation = (self.myJson.allTransactions.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row]).payee!
                 
                 self.editRow = indexPath.row
                 self.editSection = indexPath.section
@@ -379,28 +349,13 @@ extension AccountAndTransactionsViewController: UITableViewDelegate {
             
             let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
                 
-                let deleteItem = self.myJson.allTransaction.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row]
+                let deleteItem = self.myJson.allTransactions.filter("madeOn == %@", self.sectionNames[indexPath.section])[indexPath.row]
                 let deletedSectionName = self.sectionNames[indexPath.section]
-                
-                let date = NSDate()
-                let data = "{\"uuid\": \(deleteItem.id), \"action\": \"delete\"}"//.data(using: .utf8)!
-                // Not implementet yet. Sending Log with action to server
-                /*let logItem = LogInfo()
-                 logItem.Transaction = data
-                 logItem.status = false
-                 logItem.time = date
-                 logItem.id = self.logInfoId + 1
-                 self.logInfoId = logItem.id*/
-                
-                /*try! realm.write {
-                 //let json = try! JSONSerialization.jsonObject(with: data, options: [])
-                 realm.add(logItem)
-                 }*/
                 
                 try! realm.write({
                     realm.delete(deleteItem)
                 })
-                let madeOnItem = self.myJson.allTransaction.filter("madeOn == %@", deletedSectionName)
+                let madeOnItem = self.myJson.allTransactions.filter("madeOn == %@", deletedSectionName)
                 if (!madeOnItem.isEmpty) {
                     self.tableViewTransactions.beginUpdates()
                     self.tableViewTransactions.deleteRows(at: [indexPath], with: .automatic)
@@ -409,7 +364,6 @@ extension AccountAndTransactionsViewController: UITableViewDelegate {
                     self.tableViewTransactions.beginUpdates()
                     let indexSet = NSMutableIndexSet()
                     indexSet.add(indexPath.section)
-                    //self.tableViewTransactions.deleteRows(at: [indexPath], with: .automatic)
                     self.tableViewTransactions.deleteSections(indexSet as IndexSet, with: .automatic)
                     self.tableViewTransactions.endUpdates()
                 }
@@ -434,11 +388,11 @@ extension AccountAndTransactionsViewController: UITableViewDelegate {
 }
 
 //MARK: - writeValueBackDelegate
-extension AccountAndTransactionsViewController: writeValueBackDelegate {
+extension AccountAndTransactionsViewController: editedTransactionDelegate {
     //update Transactions
-    func writeValueBack(sendBackCategory: CategoryTransaction, sendBackNote: String) {
+    func sendBackCategory(_ sendBackCategory: CategoryTransaction, sendBackNote: String) {
         
-        let item = myJson.allTransaction.filter("madeOn == %@", sectionNames[editSection])[editRow]
+        let item = myJson.allTransactions.filter("madeOn == %@", sectionNames[editSection])[editRow]
         
         try! realm.write {
             realm.create(Transaction.self, value: ["id": editTransaction?.id, "Category": sendBackCategory, "Description": sendBackNote], update: true) ///???category or categoryid
@@ -450,47 +404,33 @@ extension AccountAndTransactionsViewController: writeValueBackDelegate {
         tableViewTransactions.beginUpdates()
         tableViewTransactions.reloadRows(at: [indexPath], with: .top)
         tableViewTransactions.endUpdates()
-        //tableView2.reloadData()
-        
-        //write updated Transaction in Log
-        let updateTransaction = realm.object(ofType: Transaction.self, forPrimaryKey: self.editTransaction.id) as! Transaction
-        let date = NSDate()
-        let data = "{\"uuid\": \(editTransaction.account_id)}"//.data(using: .utf8)!
     }
 }
 
 //MARK: - addingTransactionDelegate
 extension AccountAndTransactionsViewController: addingTransactionDelegate {
-    func addingDelegate(addTransaction: Transaction) {
+    func addingDelegate(_ addTransaction: Transaction) {
         // Subtracten from Accounts
         let id:Int = addTransaction.account_id
         let acc:Account = realm.object(ofType: Account.self, forPrimaryKey: id)!
-        let acc_currencyCode = acc.currencyCode
         addTransaction.currencyCode = acc.currencyCode
         try! realm.write {
             acc.setValue(acc.balance_millicents + addTransaction.amount_millicents, forKeyPath: "balance_millicents")
         }
-        var cellIndex:IndexPath!
+        //let cellIndex:IndexPath!
         //update TableView (Accounts)
         for i in 0...myJson.allAccounts.count-1{
             let indexPath = IndexPath(item: i, section: 0)
             let cell: UITableViewCell = tableViewAccounts.dequeueReusableCell(withIdentifier: "AccountCellID", for:indexPath )
-            if cell.textLabel?.text == acc.name {
-                cellIndex = indexPath
-                
-                //let cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: "AccountCellID")
+            /*if cell.textLabel?.text == acc.name {
+                //cellIndex = indexPath
                 return
-            }
+            }*/
         }
         //save in Realm
         try! realm.write({
             realm.add(addTransaction)
         })
         tableViewTransactions.reloadData()
-        
-        //write adding Transaction in Log
-        let date = NSDate()
-        let data = "{\"uuid\": \(addTransaction.account_id)}"//.data(using: .utf8)!
-        
     }
 }

@@ -13,41 +13,18 @@ class ShowTransactionViewController: UIViewController {
     var showTransaction = Transaction()
     
     @IBOutlet weak var showNavigationItem: UINavigationItem!
-    
-    //@IBOutlet weak var backNavigationItem: UINavigationItem!
+
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         showNavigationItem.title = "Transaction"
         showNavigationItem.leftBarButtonItem = UIBarButtonItem(title: "← Back", style: .plain, target: self, action: #selector(backAction))
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
-        //tableView.rowHeight = UITableViewAutomaticDimension
-        //tableView.estimatedRowHeight = 100
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func backAction(){
         dismiss(animated: true, completion: nil)
     }
- 
-    /*func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 30))
-        //var label = UILabel(frame: CGRect(x:10, y: 0, width: tableView.bounds.size.width, height:30))
-        headerView.backgroundColor = UIColor.lightGray
-        //label.textColor = UIColor.orange
-        /*if section == 0{
-            label.text = "Transaction"}
-        else {
-            label.text = "Transaction Info"}
-        headerView.addSubview(label)*/
-
-        return headerView
-    }*/
 }
 
 //MARK: - UITableViewDelegate
@@ -56,8 +33,7 @@ extension ShowTransactionViewController: UITableViewDelegate {
         if indexPath.row == 3 && indexPath.section == 0 {
             return 80
         } else {
-            if (indexPath.section == 1)
-            {
+            if (indexPath.section == 1) {
                 return 80
             } else {
                 return 40
@@ -89,7 +65,6 @@ extension ShowTransactionViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "transactionCell", for: indexPath)
-        print(showTransaction)
         if (indexPath.section == 0) {
             switch indexPath.row {
             case 0:
@@ -117,8 +92,6 @@ extension ShowTransactionViewController: UITableViewDataSource {
                 cell.textLabel?.text = "Description"
             }
         } else {
-            //switch indexPath.row {
-            //case 0:
             if (showTransaction.payee == nil) {
                 cell.detailTextLabel?.text = ""
             } else {
@@ -127,13 +100,7 @@ extension ShowTransactionViewController: UITableViewDataSource {
             cell.textLabel?.text = "Payee"
             cell.detailTextLabel?.numberOfLines = 0
             cell.detailTextLabel?.text = showTransaction.payee
-            /* default:
-             if (showTransaction.Information == nil){
-             cell.detailTextLabel?.text = ""}
-             else {cell.detailTextLabel?.text = showTransaction.Information}
-             cell.textLabel?.text = "Information"
-             cell.detailTextLabel?.numberOfLines = 0
-             }*/
+
         }
         return cell
     }
