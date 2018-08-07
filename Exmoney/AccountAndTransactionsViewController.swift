@@ -73,7 +73,7 @@ class AccountAndTransactionsViewController: UIViewController {
         includingTableViewInHeader(view: header, tableView: tableViewAccounts)
         
         //Pull-to-refresh
-        refreshControl.tintColor = UIColor.red
+        refreshControl.tintColor = .red
         refreshControl.addTarget(self, action: #selector(AccountAndTransactionsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
         self.tableViewTransactions.addSubview(self.refreshControl)
         
@@ -189,8 +189,8 @@ class AccountAndTransactionsViewController: UIViewController {
         accountsLabel = UILabel()
         accountsLabel.text = "Accounts"
         accountsLabel.frame = CGRect(x: 20, y: 10, width: Int(view.frame.width), height: lableHeight)
-        accountsLabel.textColor = UIColor.black //UIColor.orange
-        accountsLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
+        accountsLabel.textColor = .black //UIColor.orange
+        accountsLabel.font = .boldSystemFont(ofSize: 20.0)
         view.addSubview(accountsLabel)
         
         tableView.frame = CGRect(x: 0, y: 40, width: view.frame.width, height: view.frame.height - CGFloat(lableHeight) - 20)
@@ -201,8 +201,8 @@ class AccountAndTransactionsViewController: UIViewController {
         transactionsLabel = UILabel()
         transactionsLabel.text = "Transactions"
         transactionsLabel.frame = CGRect(x: 20, y: view.frame.height - CGFloat(lableHeight)-10, width: view.frame.width, height: CGFloat(lableHeight))
-        transactionsLabel.textColor = UIColor.black//UIColor.orange
-        transactionsLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
+        transactionsLabel.textColor = .black
+        transactionsLabel.font = .boldSystemFont(ofSize: 20.0)
         view.addSubview(transactionsLabel)
     }
     
@@ -216,16 +216,16 @@ class AccountAndTransactionsViewController: UIViewController {
     }
     
     //get currency symbol from currency code
-    func getSymbolForCurrencyCode(currencyCode: String) -> String? {
+    /*func getSymbolForCurrencyCode(currencyCode: String) -> String? {
         if (currencyCode == "RUB") {
-            let symbol:String = "₽"
+            let symbol = "₽"
             return symbol
         } else {
             let locale = NSLocale(localeIdentifier: currencyCode)
             let symbol = locale.displayName(forKey: NSLocale.Key.currencySymbol, value: currencyCode)
             return symbol
         }
-    }
+    }*/
     
     func getNewTransactionID(objectType: Object.Type) -> Int{
         let allEntries = realm.objects(objectType)
@@ -237,14 +237,14 @@ class AccountAndTransactionsViewController: UIViewController {
         }
     }
     
-    func amountToString(amount_millic: Int) ->String {
+    /*func amountToString(amount_millic: Int) ->String {
         let stringAmount:String
         let decimalAmount:Decimal
         decimalAmount = Decimal(amount_millic)
         let d1:Double = decimalAmount.doubleValue
         stringAmount = String(describing: d1/1000)
         return stringAmount
-    }
+    }*/
     
     @IBOutlet weak var processIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableViewTransactions: UITableView!
@@ -275,10 +275,10 @@ extension AccountAndTransactionsViewController: UITableViewDataSource {
         if tableView == self.tableViewTransactions {
             let cell = Bundle.main.loadNibNamed("TransactionTableViewCell", owner: self, options: nil)?.first as! TransactionTableViewCell
             if myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].currencyCode != nil {
-                cell.AmountLbl.text = amountToString(amount_millic: myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].amount_millicents) + " " + getSymbolForCurrencyCode(currencyCode: myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].currencyCode!)!
+                cell.AmountLbl.text = myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].amountString + " " +  myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].symbolForCurrencyCode
                 
             } else {
-                cell.AmountLbl.text = amountToString(amount_millic: myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].amount_millicents)
+                cell.AmountLbl.text = myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].amountString
             }
             
             cell.CategoryLbl.text = myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].category?.name
@@ -294,7 +294,7 @@ extension AccountAndTransactionsViewController: UITableViewDataSource {
             let cell = Bundle.main.loadNibNamed("AccountTableViewCell", owner: self, options: nil)?.first as! AccountTableViewCell
             let acc = myJson.allAccounts[indexPath.row]
             cell.AccountLbl.text = acc.name
-            cell.BalanceLbl.text = amountToString(amount_millic: Int(acc.balance_millicents)) + " " + getSymbolForCurrencyCode(currencyCode: acc.currencyCode)!
+            cell.BalanceLbl.text = acc.balanceString + " " + acc.symbolForCurrencyCode
             
             return cell
         }
@@ -411,8 +411,8 @@ extension AccountAndTransactionsViewController: editedTransactionDelegate {
 extension AccountAndTransactionsViewController: addingTransactionDelegate {
     func addingDelegate(_ addTransaction: Transaction) {
         // Subtracten from Accounts
-        let id:Int = addTransaction.account_id
-        let acc:Account = realm.object(ofType: Account.self, forPrimaryKey: id)!
+        let id = addTransaction.account_id
+        let acc = realm.object(ofType: Account.self, forPrimaryKey: id)!
         addTransaction.currencyCode = acc.currencyCode
         try! realm.write {
             acc.setValue(acc.balance_millicents + addTransaction.amount_millicents, forKeyPath: "balance_millicents")

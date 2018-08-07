@@ -17,6 +17,20 @@ class Account: Object {
     dynamic var isAccountShow = false
     dynamic var isSaltedgeAccountIdShow = false
     dynamic var id_acc = 0
+    dynamic var balanceString: String{
+        get {
+            return String(describing: Decimal(balance_millicents).doubleValue/1000)
+        }
+    }
+    dynamic var symbolForCurrencyCode: String {
+        get {
+            if (currencyCode == "RUB") {
+                return "₽"
+            } else {
+                return NSLocale(localeIdentifier: currencyCode).displayName(forKey: NSLocale.Key.currencySymbol, value: currencyCode)!
+            }
+        }
+    }
     
     override static func primaryKey() -> String? {
         return "id_acc"
@@ -50,12 +64,26 @@ class Transaction: Object {
     dynamic var madeOn: Date?
     dynamic var descriptionOfTransaction: String?
     dynamic var amount_millicents = 0
-    dynamic var currencyCode: String?
+    dynamic var currencyCode = ""
     dynamic var category: CategoryTransaction? = nil
     dynamic var information: String?
     dynamic var id = 0
     dynamic var payee: String?
     dynamic var account_id = 0
+    dynamic var amountString: String {
+        get {
+             return String(describing: Decimal(amount_millicents).doubleValue/1000)
+        }
+    }
+    dynamic var symbolForCurrencyCode: String {
+        get {
+            if (currencyCode == "RUB") {
+                return "₽"
+            } else {
+                return NSLocale(localeIdentifier: currencyCode).displayName(forKey: NSLocale.Key.currencySymbol, value: currencyCode)!
+            }
+        }
+    }
     
     override static func primaryKey() -> String? {
         return "id"
@@ -244,7 +272,7 @@ class CategoryTableViewCell: UITableViewCell {
         override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             let gapX : CGFloat = 0
-            let gapY :CGFloat = 0
+            let gapY : CGFloat = 0
             let labelHeight: CGFloat = 200
             datePicker = UIDatePicker()
             datePicker.datePickerMode = UIDatePickerMode.date

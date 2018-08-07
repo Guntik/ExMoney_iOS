@@ -215,7 +215,7 @@ class MyJsonClass {
                 if (updatingTransactions.listUpdatingResults[i].payload?.currencyCode == "")
                 {
                     let account = realm.object(ofType: Account.self, forPrimaryKey: updatingTransactions.listUpdatingResults[i].payload?.account_id)
-                    updatingTransactions.listUpdatingResults[i].payload?.currencyCode = account?.currencyCode
+                    updatingTransactions.listUpdatingResults[i].payload?.currencyCode = (account?.currencyCode)!
                 }
                 if (updatingTransactions.listUpdatingResults[i].payload?.category?.name == "")
                 {
@@ -284,7 +284,7 @@ class MyJsonClass {
                 if (list.listTransaction[i].currencyCode == "")
                 {
                     let account = realm.object(ofType: Account.self, forPrimaryKey: list.listTransaction[i].account_id)
-                    list.listTransaction[i].currencyCode = account?.currencyCode
+                    list.listTransaction[i].currencyCode = (account?.currencyCode)!
                 }
                 realm.add(list.listTransaction[i], update:true)
             }

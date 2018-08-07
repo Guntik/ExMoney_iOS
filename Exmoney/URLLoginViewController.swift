@@ -50,9 +50,9 @@ class URLLoginViewController: UIViewController {
     
     @IBOutlet weak var LoginButton: UIButton!
     
-    public var flagURL:Bool = false
-    public var flagEmail:Bool = false
-    public var flagPassword:Bool = false
+    public var flagURL = false
+    public var flagEmail = false
+    public var flagPassword = false
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -1,20 +1,15 @@
-# Exmoney_ios
-
-### Author
-Galina Gainetdinova
+# ExMoney_iOS
 
 ### Description
-This is an application for iOS devices, which allows user to look through all his accounts and transactions.
-Also user can check new transactions, add (unfortunatelly it is availible only within application) new purchases, delete and edit them. 
-It based on self-hosted web application ExMoney https://github.com/gaynetdinov/ex_money and works close with it.
-Exmoney_ios takes all bank accounts and your transactions duering last 15 days from ExMoney and displays it. Periodically this iOS application checks new trancations and updates tables, if it needs to.
-Exmoney_ios is my first project, which was written in Swift 4.1.2.
+ExMoney_iOS is an application for iOS devices, which works with [ExMoney](https://github.com/gaynetdinov/ex_money). It helps to look through user's personal finances on iOS.
+This application was written in Swift 4.1.2
+It gets from ExMoney all user's accounts and transactions and displays them. Also ExMoney_iOS allows check new transactions, add transactions, delete and edit them.
 
 ### Authentication
-How I already said, this appications works only with a close connection with ExMoney. So if you have made registratoin there, you can use your login and password for authentication in Exmoney_ios.
+In order to authentication in ExMoney_iOS, application needs login and password for ExMoney.
 
 ### Dependencies
-- Realm
-- Floaty
-- ReachabilitySwift
-- DatePickerCell
+- [Realm](https://github.com/realm/realm-cocoa)
+- [Floaty](https://github.com/kciter/Floaty)
+- [ReachabilitySwift](https://github.com/ymsheng/ReachabilitySwift)
+- [DatePickerCell](https://github.com/DylanVann/DatePickerCell)

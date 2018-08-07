@@ -143,11 +143,8 @@ extension PopUpListViewController: UITableViewDelegate{
         if categoryChange != nil {
             customDelegateForDataReturn?.sendingCategoryToHomePageViewController(categoryChange)
         }
-        //performSegue(withIdentifier: "popUpSegue", sender: category)
         let myVC = storyboard?.instantiateViewController(withIdentifier: "AddNewTransactionView") as! AddNewTransactionViewController
         myVC.category = category
-        //navigationController?.pushViewController(myVC, animated: true)
-        //self.view.removeFromSuperview()
         self.removeAnimation()
     }
 }

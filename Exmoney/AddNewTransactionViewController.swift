@@ -121,9 +121,9 @@ class AddNewTransactionViewController: UIViewController {
     }
     
     func addButtonPressed(_ sender: UIButton){
-        let amountString = (tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! TextFieldTableViewCell).TextFieldCell.text
-        if amountString != "0" {
-            if (amountString?.first != "0") {
+        let amountStringValue = (tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! TextFieldTableViewCell).TextFieldCell.text
+        if amountStringValue != "0" {
+            if (amountStringValue?.first != "0") {
             newTransaction.amount_millicents = -1 * stringToAmountMillicent(stringAmount: (tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! TextFieldTableViewCell).TextFieldCell.text!)
                 if (flagIncome) {
                     newTransaction.amount_millicents = newTransaction.amount_millicents * -1
@@ -178,14 +178,6 @@ class AddNewTransactionViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func amountToString(amount_millic: Int) ->String {// make string value from amount_millicents
-        let stringAmount:String
-        let decimalAmount:Decimal
-        decimalAmount = Decimal(amount_millic)
-        stringAmount = String(describing: decimalAmount/1000)
-        return stringAmount
-    }
-    
     func stringToAmountMillicent(stringAmount: String)->Int {// make amount_millicents from string value
         let amountMillicent: Int
         let floatNumber: Float = stringAmount.myFloatConverter * 1000
@@ -219,21 +211,21 @@ extension AddNewTransactionViewController: UITableViewDataSource {
                 let cell = Bundle.main.loadNibNamed("TextFieldTableViewCell", owner: self, options: nil)?.first as! TextFieldTableViewCell
                 cell.NameLbl.text = "Amount"
                 cell.TextFieldCell.text = "0"
-                cell.TextFieldCell.textColor = UIColor.gray
-                cell.TextFieldCell.keyboardType = UIKeyboardType.decimalPad
+                cell.TextFieldCell.textColor = .gray
+                cell.TextFieldCell.keyboardType = .decimalPad
                 return cell
             } else {
                 if (indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 3) {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "addTransactionCell", for: indexPath)
                     cell.textLabel?.text = titelNames[indexPath.row - 1]
                     cell.detailTextLabel?.text = valueNames[indexPath.row - 1]
-                    cell.detailTextLabel?.textColor = UIColor.gray
+                    cell.detailTextLabel?.textColor = .gray
                     return cell
                 } else {
                     let cell = Bundle.main.loadNibNamed("TextFieldTableViewCell", owner: self, options: nil)?.first as! TextFieldTableViewCell
                     cell.NameLbl.text = "Note"
                     cell.TextFieldCell.text = "Note"
-                    cell.TextFieldCell.textColor = UIColor.gray
+                    cell.TextFieldCell.textColor = .gray
                     //cell.TextFieldCell.delegate = self as! UITextFieldDelegate ????
                     return cell
                 }

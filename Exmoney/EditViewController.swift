@@ -39,7 +39,7 @@ class EditViewController: UIViewController {
         super.viewDidLoad()
         BarItem.title = "Editing Transaction"
         BarItem.leftBarButtonItem = UIBarButtonItem(title: "← Back", style: .plain, target: self, action: #selector(backAction))
-        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.tableFooterView = UIView(frame: .zero)
         labelText.text = labelInformation
         labelText.textColor = UIColor(red: 255/155, green: 198/255, blue: 67/255, alpha: 1)
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -90,7 +90,7 @@ extension EditViewController: UITableViewDataSource {
             cell.NameLbl.text = "Note"
             cell.TextFieldCell.text = noteToUpdate
             cell.TextFieldCell.font = UIFont(name: "Helvetica Neue", size: 14.0)
-            cell.TextFieldCell.textColor = UIColor.gray
+            cell.TextFieldCell.textColor = .gray
             if (noteToUpdate == "") {
                 cell.TextFieldCell.text = "Note"
             }
@@ -99,7 +99,7 @@ extension EditViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) //as! UITableViewCell
             cell.textLabel?.text = "Category"
             cell.detailTextLabel?.text = categoryToUpdate.name + " >"
-            cell.detailTextLabel?.textColor = UIColor.gray
+            cell.detailTextLabel?.textColor = .gray
             cell.textLabel?.font = UIFont(name:"Helvetica Neue", size: 15.0)
             return cell
         }
