@@ -274,7 +274,7 @@ extension AccountAndTransactionsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == self.tableViewTransactions {
             let cell = Bundle.main.loadNibNamed("TransactionTableViewCell", owner: self, options: nil)?.first as! TransactionTableViewCell
-            if myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].currencyCode != nil {
+            if myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].currencyCode != "" {
                 cell.AmountLbl.text = myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].amountString + " " +  myJson.allTransactions.filter("madeOn == %@", sectionNames[indexPath.section])[indexPath.row].symbolForCurrencyCode
                 
             } else {
@@ -422,10 +422,10 @@ extension AccountAndTransactionsViewController: addingTransactionDelegate {
         for i in 0...myJson.allAccounts.count-1{
             let indexPath = IndexPath(item: i, section: 0)
             let cell: UITableViewCell = tableViewAccounts.dequeueReusableCell(withIdentifier: "AccountCellID", for:indexPath )
-            /*if cell.textLabel?.text == acc.name {
+            if cell.textLabel?.text == acc.name {
                 //cellIndex = indexPath
                 return
-            }*/
+            }
         }
         //save in Realm
         try! realm.write({
