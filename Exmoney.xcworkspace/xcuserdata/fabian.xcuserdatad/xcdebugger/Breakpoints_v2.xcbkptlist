@@ -85,14 +85,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Exmoney/JsonArrays.swift"
-            timestampString = "555335236.171074"
+            filePath = "Exmoney/AccountAndTransactionsViewController.swift"
+            timestampString = "559162343.349164"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "266"
-            endingLineNumber = "266"
-            landmarkName = "updatingTransactiontFromServer()"
-            landmarkType = "7">
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "AccountAndTransactionsViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

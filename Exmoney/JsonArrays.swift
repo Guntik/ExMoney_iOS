@@ -74,7 +74,7 @@ class MyJsonClass {
             guard(error == nil) else {
                 self.showMessage(messageString: "Error: " + error.debugDescription)
                 let vc = AccountAndTransactionsViewController() //????
-                vc.performSegue(withIdentifier: "passwordSeque", sender: self)
+                vc.performSegue(withIdentifier: "passwordSeque1", sender: self)
                 return
             }
             let parseResult: NSArray
@@ -168,7 +168,7 @@ class MyJsonClass {
         return FailedUpdatingTransactions
     }
     
-    func loadAllDataFromRealm()
+    func loadAllDataFromRealm() -> Bool
     {
         allAccounts = realm.objects(Account.self)
         allTransactions = realm.objects(Transaction.self)
@@ -179,6 +179,17 @@ class MyJsonClass {
         //Make an array with dashboard = true
         allAccounts = performingAccountsArray()
         allTransactions = performingTransactionsArray()
+        //If the last opening was more than 15 days ago, then authorised again
+        if (allTransactions.count == 0){
+            userDefaults.set(false, forKey:"flagToken")
+            self.showMessage(messageString: "The Token is already changed. Please make authorization one more time.")
+            //let vc = AccountAndTransactionsViewController() //????
+            //vc.performSegue(withIdentifier: "passwordSeque1", sender: self)
+            return false
+        }
+        else {
+            return true
+        }
     }
     
     func initiateAllArrays(){
@@ -206,6 +217,12 @@ class MyJsonClass {
         } else {
             self.showMessage(messageString: "Error: ")
         }
+        allAccounts = realm.objects(Account.self)
+        allTransactions = realm.objects(Transaction.self)
+        allCategory = realm.objects(CategoryTransaction.self)
+        
+        allAccounts = performingAccountsArray()
+        allTransactions = performingTransactionsArray()
     }
     
     func updatingTableView()
@@ -258,13 +275,13 @@ class MyJsonClass {
                         self.updatingTransactions.listUpdatingResults.append(updatedTransaction)
                     }
                 }
-            } catch {
-                self.showMessage(messageString: "Could not parse data as Json")
-                return
+            } catch let error as NSError {
+                print("Failed to load: \(error.localizedDescription)")
             }
             semaphore.signal()
             }.resume()
         semaphore.wait(timeout: .distantFuture)
+        
         return countOfUpdatetedTransactionsFlag
     }
     

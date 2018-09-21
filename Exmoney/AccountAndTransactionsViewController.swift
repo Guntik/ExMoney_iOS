@@ -59,7 +59,13 @@ class AccountAndTransactionsViewController: UIViewController {
 
         createFloatButton()
         setReachability()
-        myJson.loadAllDataFromRealm()
+        //checking, if the token is valid
+        if (userDefaults.bool(forKey: "flagAccount")){
+            myJson.initiateAllArrays()
+            }
+        else {
+            myJson.loadAllDataFromRealm()
+        }
         
         tableViewTransactions.estimatedSectionHeaderHeight = 40
         self.automaticallyAdjustsScrollViewInsets = false
