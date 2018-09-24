@@ -79,7 +79,7 @@ extension ShowTransactionViewController: UITableViewDataSource {
                     cell.detailTextLabel?.text = showTransaction.category?.name}
                 cell.textLabel?.text = "Category"
             case 2:
-                if (showTransaction.currencyCode == nil){
+                if (showTransaction.currencyCode == ""){
                     cell.detailTextLabel?.text = ""}
                 else {
                     cell.detailTextLabel?.text = showTransaction.currencyCode}

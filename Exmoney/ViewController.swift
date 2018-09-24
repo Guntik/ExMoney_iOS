@@ -15,8 +15,7 @@ class ViewController: UIViewController {
         navigationController?.setToolbarHidden(true, animated: false)
         navigationController?.isNavigationBarHidden = true
 
-        if (!userDefaults.bool(forKey: "flagToken")){ //userDefaults.bool(forKey: "flagToken") == nil ||
-        
+        if (!userDefaults.bool(forKey: "flagToken")) {
         //First opening App goes to Form with URL, Pass and Email
             self.performSegue(withIdentifier: "URLView", sender: self)
         } else {

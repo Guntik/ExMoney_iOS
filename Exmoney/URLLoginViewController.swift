@@ -14,7 +14,6 @@ class URLLoginViewController: UIViewController {
     
     @IBOutlet weak var URLTextField: UITextField!
     
-    //var flagToken:Bool = false
     var tokenKey = ""
     
     @IBAction func urlEditingChanged(_ sender: Any) {
@@ -76,11 +75,11 @@ class URLLoginViewController: UIViewController {
         //Post Method, get Token
             postToken(url: url, email: email, password: password)
         
-        if (flagAccount)
-        {
-            //self.performSegue(withIdentifier: "ViewTableView", sender: self)
+        //if (flagAccount)
+        //{
             self.performSegue(withIdentifier: "ViewTableView1", sender: self)
-        } else {
+        }
+        else {
             // Message empty fields
             let message:String = "You have empty fields"
             let alert = UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertControllerStyle.alert)
@@ -88,9 +87,8 @@ class URLLoginViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
             return
             }
-        }
     }
-    var flagAccount = false
+    var flagAccount: Bool = false
     
     func postToken(url: String, email: String, password: String)
     {
@@ -144,9 +142,9 @@ class URLLoginViewController: UIViewController {
             let alert = UIAlertController(title: "Alert", message: messageConvert, preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
-            self.flagAccount = false
+            userDefaults.set(false, forKey:"flagAccount")
         } else {
-            self.flagAccount = true
+            userDefaults.set(true, forKey:"flagAccount")
         }
     }
     var url = ""
