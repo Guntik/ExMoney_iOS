@@ -136,7 +136,7 @@ extension PopUpListViewController: UITableViewDelegate{
             category = categoryChange.name
         } else {
             let categoryIsNeeded = realm.objects(CategoryTransaction.self).filter("name == %@ AND parent == true", sectionNames[(indexPath?.section)!]).first
-            arrayOfSpecies = realm.objects(CategoryTransaction.self).filter("parent_id == %@", categoryIsNeeded?.id).toArray(ofType: CategoryTransaction.self).sorted { $0.name < $1.name } as [CategoryTransaction]
+            arrayOfSpecies = realm.objects(CategoryTransaction.self).filter("parent_id == %@", categoryIsNeeded!.id ).toArray(ofType: CategoryTransaction.self).sorted { $0.name < $1.name } as [CategoryTransaction]
             categoryChange = arrayOfSpecies?[indexPath!.row]
             category = categoryChange.name
         }
